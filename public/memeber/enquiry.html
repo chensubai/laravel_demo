@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>用户中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="./public/css/bootstrap.min.css" media="screen" type="text/css">
+    <link rel="stylesheet" href="./public/js/layui/css/layui.css">
+    <link rel="stylesheet" href="./public/css/global.css">
+    <link rel="stylesheet" href="./public/font/iconfont.css">
+    <script src="./public/js/layui/layui.js"></script>
+    <script src="./public/js/jquery-1.11.0.min.js"></script>
+    <script src="./public/js/bootstrap.min.js"></script>
+    <script src="./public/js/base.js"></script>
+    <script>
+        layui.config({
+            base: './public/js/mods/'
+        }).extend({
+            fly: 'index'
+        }).use('fly');
+    </script>
+</head>
+
+<body class="body">
+    <div class="fly-header layui-bg-black">
+        <div class="layui-container">
+            <a class="fly-logo" href="../cms/index.html">
+                <img class="memeberlogo" src="./public/img/LOGO.png" alt="layui">
+            </a>
+            <ul class="layui-nav fly-nav-user" style="display: flex;align-items: center;">
+                <!-- 登入后的状态 -->
+                <li class="layui-nav-item">
+                    <a class="fly-nav-avatar" href="javascript:;">
+                        <img src="" id="avatar">
+                        <cite><span id="username"></span></cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="../memeber/index.html"><i class="layui-icon">&#xe612;</i>マイページ</a></dd>
+                        <dd><a href="../memeber/profile.html"><i class="layui-icon">&#xe620;</i>会員情報</a></dd>
+                        <hr style="margin: 5px 0;">
+                        <dd><a href="../memeber/login.html" style="text-align: center;">ログアウト</a></dd>
+                    </dl>
+                </li>
+                <span class="layui-hide-xs" style="color: #000;">|</span>
+                <span class="layui-hide-xs" style="color: #000;">日本 (日本語 / ¥ JPY)</span>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="layui-container">
+            <a class="fly-logo" href="../cms/index.html">
+                ホームページx
+            </a>
+        </div>
+    </div>
+    <div class="layui-container fly-marginTop fly-user-main">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+            <li class="layui-nav-item">
+                <a href="../memeber/index.html"><i class="iconfont icon-people"></i>&nbsp;アカウント概要</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/shoporder.html"><i class="iconfont icon-oschina"></i>&nbsp;店頭履歴</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/order.html"><i class="iconfont icon-caigou"></i>&nbsp;郵送履歴</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/enquiry.html"><i class="iconfont icon-shenhe"></i>&nbsp;查定履歴</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/profile.html"><i class="iconfont icon-setup"></i>&nbsp;会員情報</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/car.html"><i class="iconfont icon-caigou-xianxing"></i>&nbsp;カート</a>
+            </li>
+        </ul>
+        <div class="site-tree-mobile layui-hide">
+            <i class="layui-icon">&#xe602;</i>
+        </div>
+        <div class="site-mobile-shade"></div>
+        <div class="site-tree-mobile layui-hide">
+            <i class="layui-icon">&#xe602;</i>
+        </div>
+        <div class="site-mobile-shade"></div>
+        <div class="fly-panel fly-panel-user" pad20 style="padding-top:20px;">
+            <style>
+                .layui-laydate .layui-this {
+                    background-color: #a8b6cb !important;
+                }
+
+                .layui-form-select dl dd.layui-this {
+                    background-color: #a8b6cb !important;
+                }
+
+                .layui-laypage .layui-laypage-curr .layui-laypage-em {
+                    background-color: #DBE1EA;
+                }
+
+                .layui-form-checked[lay-skin=primary] i {
+                    background-color: #a8b6cb;
+                }
+
+                .layui-btn-now {
+                    background: #8ac5e7;
+                }
+
+                .layui-btn-now1 {
+                    background-color: #84aeed;
+                }
+
+                .layui-nav .layui-nav-item a {
+                    color: #000;
+                }
+
+                .layui-nav .layui-nav-item a:hover,
+                .layui-nav .layui-this a {
+                    color: #000;
+                    text-decoration: none;
+                }
+
+                .memeberlogo {
+                    width: 30%;
+                }
+
+                .layui-tab-brief>.layui-tab-title .layui-this {
+                    color: #728EB7;
+                }
+
+                .layui-tab-brief>.layui-tab-more li.layui-this:after,
+                .layui-tab-brief>.layui-tab-title .layui-this:after {
+                    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+                }
+            </style>
+            <style>
+                .layui-tab-brief>.layui-tab-title .layui-this {
+                    color: #000;
+                }
+
+                .layui-laypage .layui-laypage-curr .layui-laypage-em {
+                    background-color: #DBE1EA;
+                }
+
+                .layui-form-checked[lay-skin=primary] i {
+                    background-color: #a8b6cb;
+                }
+
+                .layui-tab-brief>.layui-tab-more li.layui-this:after,
+                .layui-tab-brief>.layui-tab-title .layui-this:after {
+                    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+                }
+            </style>
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">查定履歴</li>
+                </ul>
+                <div class="layui-tab-content" style="padding: 20px 0;">
+                    <div class="layui-tab-item layui-show">
+                        <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+                    </div>
+                </div>
+            </div>
+            <script type="text/html" id="barTool">
+                {{#  if(d.mater_price > 0 && d.iscart === 0 && d.examinetime){ }}
+                <a href="#" onclick="addCarts(this)" class="layui-btn layui-btn-sm layui-btn-normal" data-whatever="{{ d.id }}">カードに追加</a>
+                {{#  } }}
+                <a href="#" onclick="javascript:return false;" class="layui-btn layui-btn-now1 layui-btn-xs" data-toggle="modal" data-target="#enquiryDetailModal" data-whatever="{{ d.id }}">詳細</a>
+                
+                <a href='{:url("delenquiry")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del2">削除</a>
+            </script>
+            <script type="text/html" id="iscart">
+                <div>{{#  if(d.examinetime){ }} {{#  if(d.iscart){ }} 追加済 {{#  } else { }} 追加待 {{#  } }} {{#  } else { }} 時間オーバー {{#  } }}</div>
+            </script>
+
+            <!-- 查定明细详情modal -->
+            <div class="modal fade" id="enquiryDetailModal" tabindex="-1" role="dialog"
+                aria-labelledby="enquiryDetailModalLabel" style="z-index: 10000;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="enquiryDetailModalLabel">查定詳細</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- 鉴定明细数据 -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">閉じ</button>
+                            <!-- <button type="button" class="btn btn-primary">确定</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 鉴定补图modal -->
+            <div class="modal fade" id="appraisalgraphModal" tabindex="-1" role="dialog"
+                aria-labelledby="appraisalgraphModalLabel" style="z-index: 10000;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="appraisalgraphModalLabel">鉴定补图</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- 补图 -->
+
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn" id="more_graph">补图上传</button>
+                                <input type="hidden" name="more_graph" required="" placeholder="鉴定图片详情">
+                                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                                    补图预览：
+                                    <div class="layui-upload-list" id="more_graph_img"></div>
+                                </blockquote>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">閉じ</button>
+                            <button type="button" class="btn btn-primary" id="save_appraisalgraph">登録する</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                let user = sessionStorage.getItem('user')
+                user = JSON.parse(user)
+                $('#avatar').attr('src', user.avatar)
+                $('#username').html(user.username)
+                layui.use(['table'], function () {
+                    var table = layui.table,
+                        $ = layui.$,
+                        form = layui.form;
+                    table.render({
+                        elem: '#dataTable',
+                        url: baseUrl + '/api/materiel/list' //数据接口
+                        , method: 'get'
+                        , headers: { 'Authorization': sessionStorage.getItem('token') }
+                        , text: {
+                            none: 'オーダー0' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+                        },
+                        cols: [
+                            [
+                                // { field: 'id', width: 60, title: 'ID' },
+                                { field: 'name', width: 80, title: 'お名前', align: "center" },
+                                // { field: 'frigate_name',width: 80, title: 'お名前フリガナ',align: "center" },
+                                { field: 'commodity_name', width: 80, title: '商品名', align: "center" },
+                                // { field: 'pinfan',width: 80, title: '品番'},
+                                // { field: 'rules',width: 80, title: 'サイズ'},
+                                // { field: 'num',width: 80, title: '個数'},
+                                { field: 'createtime', width: 120, title: '依頼時間', align: "center", sort: true },
+                                // { field: 'examinetime', width: 180, title: '审核时间' },
+                                // { field: 'url',width: 60,align:"center", title: 'URL',templet:'<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>'},
+                                { field: 'mater_price', width: 120, title: '査定参考価格', align: "center" },
+                                { field: 'iscart', title: 'カートに追加', width: 130, align: "center", toolbar: '#iscart'},
+                                { field: 'number', width: 220, title: '詳細', toolbar: '#barTool', align: "center" }
+                            ]
+                        ],
+                        page: {},
+                        parseData: function (res) { //res 即为原始返回的数据
+                            console.log(res)
+                            return {
+                                "code": 0, //解析接口状态
+                                "msg": res.msg, //解析提示文本
+                                "count": res.data.total, //解析数据长度
+                                "data": res.data.data //解析数据列表
+                            }
+                        }
+                    });
+
+                });
+
+                function addCarts(obj) {
+
+                    var enquiryid = $(obj).attr('data-whatever');
+
+                    layui.use('layer', function () {
+
+                        var layer = layui.layer;
+
+                        layer.confirm('カートに追加しますか?', { icon: 3, title: 'メッセージ', btn: ['確定', 'マイベージ'] }, function (index) {
+                            var serialnum = $('#recipient-name2').val();
+                            var orderid = $('#recipient-orderid2').val();
+                            $.post("/member/content/addCarts", { "enquiryid": enquiryid }, function (data) {
+                                if (data.code == 0) {
+                                    if (data.url != '') {
+                                        layer.confirm(data.msg, { icon: 3, title: 'メッセージ', btn: ['さらに追加する', 'カートを見る'] }, function (index) {
+                                            //do something
+                                            window.location.href = '/member/content/enquiry.html'
+                                            layer.close(index);
+                                        }, function (index) {
+
+                                            window.location.href = data.url;
+                                            layer.close(index);
+                                        });
+                                        return false;
+                                    }
+
+                                    layer.confirm(data.msg, { icon: 3, title: 'メッセージ', btn: ['確定', 'カート'] }, function (index) {
+                                        //do something
+                                        location.reload();
+                                        layer.close(index);
+                                    }, function (index) {
+
+                                        window.location.href = '/member/content/carts.html'
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.alert(data.msg, {
+                                        icon: 5,
+                                        title: "メッセージ",
+                                        btn: "確定"
+                                    });
+                                }
+                            }, "json");
+
+                            layer.close(index);
+                        }, function (index) {
+                            layer.close(index);
+                        });
+
+                    });
+                }
+
+                $(function () {
+
+                    layui.use(['layer', 'upload'], function () {
+                        layer = layui.layer
+
+                        var $ = layui.jquery
+                            , upload = layui.upload;
+                        $('#enquiryDetailModal').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget)
+                            var enquiryId = button.data('whatever')
+                            var modal = $(this)
+
+                            $.post("/member/content/getEnquiryDetail", { "enquiryid": enquiryId }, function (data) {
+
+                                if (data.code == 0) {
+                                    modal.find('.modal-body').html(data.data)
+                                } else {
+                                    layer.alert(data.msg, {
+                                        icon: 5,
+                                        title: "信息"
+                                    });
+                                }
+                            }, "json");
+                        })
+                        upload.render({
+                            elem: '#more_graph'
+                            , url: '/attachment/upload/upload/dir/images/module/cms.html'
+                            , multiple: true
+                            , before: function (obj) {
+                                //预读本地文件示例，不支持ie8
+                                obj.preview(function (index, file, result) {
+                                    $('#more_graph_img').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img" style="margin-right: 10px;">')
+                                });
+                            }
+                            , done: function (res) {
+                                var original_val = $("input[name='more_graph']").val();
+                                $("input[name='more_graph']").val([original_val, res.id]);
+                            }
+                        });
+                        $('#appraisalgraphModal').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget)
+                            var appraisalId = button.data('whatever')
+                            $('#save_appraisalgraph').click(function () {
+                                var original_val = $("input[name='more_graph']").val();
+                                if (original_val == '') {
+                                    layer.msg('请上传补图');
+                                    return false;
+                                }
+                                $.post("/member/content/saveAppraisalGraph", { "appraisalgraph": original_val, "appraisalid": appraisalId }, function (data) {
+                                    if (data.code == 0) {
+                                        $('#appraisalgraphModal').modal('hide');
+                                    }
+                                    layer.msg(data.msg);
+                                }, "json");
+                            });
+                        });
+                    })
+                })
+                $(document).on('click', '.layui-tr-del2', function () {
+                    var that = $(this),
+                        href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
+                    layer.confirm('商品がカードから削除します？', { icon: 3, title: 'メッセージ', btn: ['確定', 'マイページ'] }, function (index) {
+                        if (!href) {
+                            layer.msg('请设置data-href参数');
+                            return false;
+                        }
+                        $.get(href, function (res) {
+                            if (res.code == 0) {
+                                layer.msg(res.msg);
+                            } else {
+                                that.parents('tr').remove();
+                            }
+                        });
+                        layer.close(index);
+                    });
+                    return false;
+                });
+            </script>
+        </div>
+    </div>
+    <div class="fly-footer">
+        <p>古物営業許可第305502007435号 </p>
+        <p><a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备19030271号-1</a> <a href="/"
+                target="_blank">the1sneaker</a></p>
+    </div>
+</body>

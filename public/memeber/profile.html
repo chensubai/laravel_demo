@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>用户中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="./public/css/bootstrap.min.css" media="screen" type="text/css">
+    <link rel="stylesheet" href="./public/js/layui/css/layui.css">
+    <link rel="stylesheet" href="./public/css/global.css">
+    <link rel="stylesheet" href="./public/font/iconfont.css">
+    <script src="./public/js/layui/layui.js"></script>
+    <script src="./public/js/jquery-1.11.0.min.js"></script>
+    <script src="./public/js/bootstrap.min.js"></script>
+    <script src="./public/js/base.js"></script>
+    <script>
+        layui.config({
+            base: './public/js/mods/'
+        }).extend({
+            fly: 'index'
+        }).use('fly');
+    </script>
+</head>
+
+<body class="body">
+    <div class="fly-header layui-bg-black">
+        <div class="layui-container">
+            <a class="fly-logo" href="../cms/index.html">
+                <img class="memeberlogo" src="./public/img/LOGO.png" alt="layui">
+            </a>
+            <ul class="layui-nav fly-nav-user" style="display: flex;align-items: center;">
+                <!-- 登入后的状态 -->
+                <li class="layui-nav-item">
+                    <a class="fly-nav-avatar" href="javascript:;">
+                        <img src="" id="avatar">
+                        <cite><span id="username"></span></cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="../memeber/index.html"><i class="layui-icon">&#xe612;</i>マイページ</a></dd>
+                        <dd><a href="../memeber/profile.html"><i class="layui-icon">&#xe620;</i>会員情報</a></dd>
+                        <hr style="margin: 5px 0;">
+                        <dd><a href="../memeber/login.html" style="text-align: center;">ログアウト</a></dd>
+                    </dl>
+                </li>
+                <span class="layui-hide-xs" style="color: #000;">|</span>
+                <span class="layui-hide-xs" style="color: #000;">日本 (日本語 / ¥ JPY)</span>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="layui-container">
+            <a class="fly-logo" href="../cms/index.html">
+                ホームページx
+            </a>
+        </div>
+    </div>
+    <div class="layui-container fly-marginTop fly-user-main">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+            <li class="layui-nav-item">
+                <a href="../memeber/index.html"><i class="iconfont icon-people"></i>&nbsp;アカウント概要</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/shoporder.html"><i class="iconfont icon-oschina"></i>&nbsp;店頭履歴</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/order.html"><i class="iconfont icon-caigou"></i>&nbsp;郵送履歴</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/enquiry.html"><i class="iconfont icon-shenhe"></i>&nbsp;查定履歴</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/profile.html"><i class="iconfont icon-setup"></i>&nbsp;会員情報</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/car.html"><i class="iconfont icon-caigou-xianxing"></i>&nbsp;カート</a>
+            </li>
+        </ul>
+        <div class="site-tree-mobile layui-hide">
+            <i class="layui-icon">&#xe602;</i>
+        </div>
+        <div class="site-mobile-shade"></div>
+        <div class="site-tree-mobile layui-hide">
+            <i class="layui-icon">&#xe602;</i>
+        </div>
+        <div class="site-mobile-shade"></div>
+        <div class="fly-panel fly-panel-user" pad20 style="padding-top:20px;">
+            <style>
+                .layui-laydate .layui-this {
+                    background-color: #a8b6cb !important;
+                }
+
+                .layui-form-select dl dd.layui-this {
+                    background-color: #a8b6cb !important;
+                }
+
+                .layui-laypage .layui-laypage-curr .layui-laypage-em {
+                    background-color: #DBE1EA;
+                }
+
+                .layui-form-checked[lay-skin=primary] i {
+                    background-color: #a8b6cb;
+                }
+
+                .layui-btn-now {
+                    background: #8ac5e7;
+                }
+
+                .layui-btn-now1 {
+                    background-color: #84aeed;
+                }
+
+                .layui-nav .layui-nav-item a {
+                    color: #000;
+                }
+
+                .layui-nav .layui-nav-item a:hover,
+                .layui-nav .layui-this a {
+                    color: #000;
+                    text-decoration: none;
+                }
+
+                .memeberlogo {
+                    width: 30%;
+                }
+
+                .layui-tab-brief>.layui-tab-title .layui-this {
+                    color: #728EB7;
+                }
+
+                .layui-tab-brief>.layui-tab-more li.layui-this:after,
+                .layui-tab-brief>.layui-tab-title .layui-this:after {
+                    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+                }
+            </style>
+            <div class="layui-tab layui-tab-brief" lay-filter="user">
+                <ul class="layui-tab-title" id="LAY_mine">
+                    <li class="layui-this" lay-id="examine">会員申請</li>
+                    <li lay-id="examine2">情報修正</li>
+                    <li lay-id="info">会員情報</li>
+                    <li lay-id="avatar">写真</li>
+                    <li lay-id="pass">パスワード</li>
+                </ul>
+                <div class="layui-tab-content" style="padding: 20px 0;">
+
+                    <div class="layui-form-pane layui-tab-item layui-show">
+                        <div class="layui-form-mid layui-word-aux">
+                            ※注意　提出して頂いたお客様情報を確認し36時間～48時間以内に承認させて頂きます。また弊社からご連絡ある場合がございますのでご了承下さい。
+                        </div>
+                        <form class="layui-form" id="addExamine">
+                            <div class="layui-form-item"> <label class="layui-form-label">お名前</label>
+                                <div class="layui-input-block"> <input type="text" name="name" required=""
+                                        lay-verify="required" autocomplete="off" value="" class="layui-input"> </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">性別</label>
+                                <div class="layui-input-block">
+                                    <!-- <input type="text" name="sex" required="" lay-verify="required" autocomplete="off" value="{$examineinfo.sex}" class="layui-input">  -->
+                                    <input type="radio" name="sex" value="1" title="男">
+                                    <input type="radio" name="sex" value="2" title="女">
+                                </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">生年月日</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id='birth' name="birth" required="" lay-verify="required"
+                                        autocomplete="off" value="{$examineinfo.birth}" class="layui-input test-item"
+                                        readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">年齢</label>
+                                <div class="layui-input-block"> <input type="text" id='age' readonly
+                                        style="background:#CCCCCC" name="age" required="" lay-verify="required"
+                                        autocomplete="off" value="{$examineinfo.age}" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">職業</label>
+                                <div class="layui-input-block">
+                                    <select name="occupation" value="{$examineinfo.occupation}">
+                                        <option value="会社員">会社員</option>
+                                        <option value="自営業">自営業</option>
+                                        <option value="公務員">公務員</option>
+                                        <option value="アルバイト">アルバイト</option>
+                                        <option value="学生">学生</option>
+                                        <option value="その他">その他</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">銀行名</label>
+                                <div class="layui-input-block"> <input type="text" name="bank_name" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.bank_name}"
+                                        class="layui-input"> </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">支店名</label>
+                                <div class="layui-input-block"> <input type="text" name="branch_name" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.branch_name}"
+                                        class="layui-input"> </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">口座種別</label>
+                                <div class="layui-input-block">
+                                    <select name="occupation2" value="{$examineinfo.port_category}">
+                                        <option value="普通">普通</option>
+                                        <option value="当座">当座</option>
+                                        <option value="貯蓄">貯蓄</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">口座番号</label>
+                                <div class="layui-input-block"> <input type="text" name="slogans" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.slogans}"
+                                        class="layui-input"> </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">口座名義</label>
+                                <div class="layui-input-block"> <input type="text" name="name_mouth" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.name_mouth}"
+                                        class="layui-input"> </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">ご住所</label>
+                                <div class="layui-input-block"> <input type="text" name="addr" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.addr}"
+                                        class="layui-input"> </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">連絡先電話番号</label>
+                                <div class="layui-input-block"> <input type="text" name="phone_number" required=""
+                                        lay-verify="required|jp_mobile" autocomplete="off"
+                                        value="{$examineinfo.phone_number}" class="layui-input"> </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">ご署名</label>
+                                <div class="layui-input-block"> <input type="text" name="signature" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.signature}"
+                                        class="layui-input"> </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label"
+                                    style="width: 80%">顔付き身分証をアップロードする</label>
+                                <div class="layui-input-block"> </div>
+                            </div>
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn" id="positive">正面</button>
+                                <div class="layui-upload-list">
+                                    <img class="layui-upload-img" id="positiveImg" src=""
+                                        style="width: 220px;height:220px;">
+                                    <p id="positiveText"></p>
+                                    <input type="hidden" name="positive" required="" placeholder="证件图片详情" value="0">
+                                </div>
+                            </div>
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn" id="otherSide">裏側</button>
+                                <div class="layui-upload-list">
+                                    <img class="layui-upload-img" id="otherSideImg"
+                                        src=""
+                                        style="width: 220px;height:220px;">
+                                    <p id="otherSideText"></p>
+                                    <input type="hidden" name="other_side" required="" placeholder="证件图片详情" value="0">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <input type="hidden" name="id" value="{$examineinfo.id}">
+                                <button class="layui-btn" key="set-mine" lay-filter="formSubmit" type="button"
+                                    onclick="addExamine()" lay-submit="">申請依頼</button>
+                                <!-- <input type="submit">提交审核</button> -->
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 修改情报信息 -->
+                    <div class="layui-form-pane layui-tab-item">
+                        <form class="layui-form" id="exidEamine">
+                            <div class="layui-form-item"> <label class="layui-form-label">お名前</label>
+                                <div class="layui-input-block"> <input type="text" name="name" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.name}"
+                                        class="layui-input"> </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">性別</label>
+                                <div class="layui-input-block">
+                                    <!-- <input type="text" name="sex" required="" lay-verify="required" autocomplete="off" value="{$examineinfo.sex}" class="layui-input">  -->
+                                    <input type="radio" name="sex" value="1" title="男">
+                                    <input type="radio" name="sex" value="2" title="女">
+                                </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">生年月日</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id='birth2' name="birth" required="" lay-verify="required"
+                                        autocomplete="off" value="{$examineinfo.birth}" class="layui-input test-item2"
+                                        readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">年齢</label>
+                                <div class="layui-input-block"> <input type="text" readonly style="background:#CCCCCC"
+                                        id="age2" name="age" required="" lay-verify="required" autocomplete="off"
+                                        value="{$examineinfo.age}" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">職業</label>
+                                <div class="layui-input-block">
+                                    <select name="occupation" lay-verify="">
+                                        <option value="会社員">会社員
+                                        </option>
+                                        <option value="自営業">自営業
+                                        </option>
+                                        <option value="公務員">公務員
+                                        </option>
+                                        <option value="アルバイト">
+                                            アルバイト</option>
+                                        <option value="学生">学生
+                                        </option>
+                                        <option value="その他">その他
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">銀行名</label>
+                                <div class="layui-input-block"> <input type="text" name="bank_name" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.bank_name}"
+                                        class="layui-input"> </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">支店名</label>
+                                <div class="layui-input-block"> <input type="text" name="branch_name" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.branch_name}"
+                                        class="layui-input"> </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">口座種別</label>
+                                <div class="layui-input-block">
+                                    <select name="port_category" lay-verify="">
+                                        <option value="普通">普通
+                                        </option>
+                                        <option value="当座">当座
+                                        </option>
+                                        <option value="貯蓄">貯蓄
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">口座番号</label>
+                                <div class="layui-input-block"> <input type="text" name="slogans" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.slogans}"
+                                        class="layui-input"> </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">口座名義</label>
+                                <div class="layui-input-block"> <input type="text" name="name_mouth" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.name_mouth}"
+                                        class="layui-input"> </div>
+                            </div>
+
+                            <div class="layui-form-item"> <label class="layui-form-label">ご住所</label>
+                                <div class="layui-input-block"> <input type="text" name="addr" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.addr}"
+                                        class="layui-input"> </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">連絡先電話番号</label>
+                                <div class="layui-input-block"> <input type="text" name="phone_number" required=""
+                                        lay-verify="required|jp_mobile" autocomplete="off"
+                                        value="{$examineinfo.phone_number}" class="layui-input"> </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">ご署名</label>
+                                <div class="layui-input-block"> <input type="text" name="signature" required=""
+                                        lay-verify="required" autocomplete="off" value="{$examineinfo.signature}"
+                                        class="layui-input"> </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <input type="hidden" name="id" value="{$examineinfo.id}">
+                                <button class="layui-btn" key="set-mine" lay-filter="formSubmit" onclick="exidExamine()"
+                                    lay-submit type="button">修正</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                    <div class="layui-form layui-form-pane layui-tab-item">
+                        <form class="layui-form" id="setmine">
+                            <div class="layui-form-item"> <label class="layui-form-label">アカウント</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="username" required="" lay-verify="required"
+                                        autocomplete="off" value="{$userinfo.username}" class="layui-input" disabled
+                                        style="cursor: not-allowed !important;">
+                                </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">お名前</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="nickname" required="" lay-verify="required"
+                                        autocomplete="off" value="{$userinfo.nickname}" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">連絡先電話番号</label>
+                                <div class="layui-input-block"> <input type="text" name="mobile" required=""
+                                        lay-verify="jp_mobile" autocomplete="off" value="{$userinfo.mobile}"
+                                        class="layui-input"></div>
+                                <!-- <button class="layui-btn layui-iframe" type="button" href="{:url('changemobile')}"
+                                    lay-data="{width:'440px',height:'250px',title:'修改手机'}">修改</button> -->
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">メールアドレス</label>
+                                <div class="layui-input-block"> <input type="text" name="email" required=""
+                                        lay-verify="email" autocomplete="off" value="{$userinfo.email}"
+                                        class="layui-input"> </div>
+                                <!-- <button class="layui-btn layui-iframe" type="button" href="{:url('changeemail')}"
+                                    lay-data="{width:'440px',height:'250px',title:'修改邮箱'}">修改</button> -->
+                            </div>
+                            <div class="layui-form-item"> <input type="hidden" name="id" value=""> <button
+                                    class="layui-btn" key="set-mine" lay-filter="formSubmit" lay-submit="" type="button"
+                                    onclick="setmine()">登録する</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-form layui-form-pane layui-tab-item">
+                        <div class="layui-form-item">
+                            <div class="avatar-add">
+                                <p>サイズ168 * 168、サポートjpg、png、gif、最大サイズは50KBを超えることはできません</p> <button type="button"
+                                    class="layui-btn upload-img">
+                                    <i class="layui-icon"></i>写真アップロード </button><input class="layui-upload-file"
+                                    type="file" accept="undefined" name="file">
+                                <img id="avatar" src=""> <span class="loading"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-pane layui-tab-item">
+                        <form class="layui-form" action="{:url('member/index/changepwd')}" method="post">
+                            <div class="layui-form-item"> <label class="layui-form-label">パスワード</label>
+                                <div class="layui-input-block"> <input type="password" name="oldpassword" required=""
+                                        lay-verify="required" autocomplete="off" class="layui-input"> </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">新しいパスワード</label>
+                                <div class="layui-input-block"> <input type="password" name="newpassword" required=""
+                                        lay-verify="required" autocomplete="off" class="layui-input"> </div>
+                            </div>
+                            <div class="layui-form-item"> <label class="layui-form-label">新しいパスワード確認</label>
+                                <div class="layui-input-block"> <input type="password" name="renewpassword" required=""
+                                        lay-verify="required" autocomplete="off" class="layui-input"> </div>
+                            </div>
+                            <div class="layui-form-item"> <button class="layui-btn" key="set-mine"
+                                    lay-filter="formSubmit" lay-submit="">登録する</button> </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- 上传图片进度条 -->
+            <div id="win" style="display:none" class="layui-progress layui-progress-big" lay-showPercent="yes"
+                lay-filter="progressBar">
+                <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+            </div>
+
+            <style>
+                .layui-upload-img {
+                    width: 120px;
+                    height: 120px;
+                    margin: 0 10px 10px 0;
+                }
+
+                .layui-form-radio>i:hover,
+                .layui-form-radioed>i {
+                    color: #a8b6cb;
+                }
+
+                .layui-btn {
+                    background-color: #a8b6cb;
+                }
+            </style>
+            <script type="text/javascript">
+                function name(data) {
+                    $("input[name='name']")[0].value = data.data.name
+                    $("input[name='name']")[1].value = data.data.name
+                    if (data.data.sex == 1) {
+                        $("input[name='sex']").eq(0).next().click()
+                        $("input[name='sex']").eq(2).next().click()
+                    } else {
+                        $("input[name='sex']").eq(1).next().click()
+                        $("input[name='sex']").eq(3).next().click()
+                    }
+                    $("input[name='birth']")[0].value = data.data.birth
+                    $("input[name='birth']")[1].value = data.data.birth
+                    $("input[name='age']")[0].value = data.data.age
+                    $("input[name='age']")[1].value = data.data.age
+                    $("select[name='occupation']")[0].value = data.data.occupation
+                    $("select[name='occupation']")[1].value = data.data.occupation
+                    $("input[name='bank_name']")[0].value = data.data.bank_name
+                    $("input[name='bank_name']")[1].value = data.data.bank_name
+                    $("input[name='branch_name']")[0].value = data.data.branch_name
+                    $("input[name='branch_name']")[1].value = data.data.branch_name
+                    $("select[name='occupation2']")[0].value = data.data.port_category
+                    $("select[name='occupation']")[1].value = data.data.port_category
+                    $("input[name='slogans']")[0].value = data.data.slogans
+                    $("input[name='slogans']")[1].value = data.data.slogans
+                    $("input[name='name_mouth']")[0].value = data.data.name_mouth
+                    $("input[name='name_mouth']")[1].value = data.data.name_mouth
+                    $("input[name='addr']")[0].value = data.data.addr
+                    $("input[name='addr']")[1].value = data.data.addr
+                    $("input[name='id']")[0].value = data.data.id
+                    $("input[name='id']")[1].value = data.data.id
+                    $("input[name='id']")[2].value = data.data.id
+                    // $("input[name='id']")[3].value = data.data.id
+                    $("input[name='phone_number']")[0].value = data.data.phone_number
+                    $("input[name='phone_number']")[1].value = data.data.phone_number
+                    $("input[name='signature']")[0].value = data.data.signature
+                    $("input[name='signature']")[1].value = data.data.signature
+                    $("#positiveImg").attr('src', data.data.positive_url)
+                    $("#otherSideImg").attr('src', data.data.otherSideImg)
+                }
+                let user = sessionStorage.getItem('user')
+                user = JSON.parse(user)
+                $('#avatar').attr('src', user.avatar)
+                $('#username').html(user.username)
+                function addExamine() {
+                    var d = {};
+                    var t = $('#addExamine [name]').serializeArray();
+                    $.each(t, function () {
+                        d[this.name] = this.value;
+                    });
+                    let data = d;
+                    $.ajax({
+                        type: 'post',
+                        url: baseUrl + "/api/examine/add",
+                        data: data,
+                        headers: {
+                            'Authorization': sessionStorage.getItem('token'),
+                        },
+                        success(data) {
+                            if (data.code == 200) {
+                                layer.msg(data.msg)
+                                name(data)
+                            } else {
+                                layer.msg(data.msg)
+                            }
+                        }
+                    })
+                }
+                function setmine() {
+                    var d = {};
+                    var t = $('#setmine [name]').serializeArray();
+                    $.each(t, function () {
+                        d[this.name] = this.value;
+                    });
+                    let data = d;
+                    $.ajax({
+                        type: 'post',
+                        url: baseUrl + "/api/member/edit",
+                        data: data,
+                        headers: {
+                            'Authorization': sessionStorage.getItem('token'),
+                        },
+                        success(data) {
+                            if (data.code == 200) {
+                                layer.msg(data.msg)
+                                name(data)
+                            }
+                        }
+                    })
+                }
+                function exidExamine() {
+                    var d = {};
+                    var t = $('#exidEamine [name]').serializeArray();
+                    $.each(t, function () {
+                        d[this.name] = this.value;
+                    });
+                    let data = d;
+                    $.ajax({
+                        type: 'post',
+                        url: baseUrl + "/api/examine/edit",
+                        data: data,
+                        headers: {
+                            'Authorization': sessionStorage.getItem('token'),
+                        },
+                        success(data) {
+                            if (data.code == 200) {
+                                layer.msg(data.msg)
+                                name(data)
+                            } else {
+                                layer.msg(data.msg)
+                            }
+                        }
+                    })
+                }
+                layui.use('form', function () {
+                    var form = layui.form;
+                    var $ = layui.$
+                    // 表单验证
+                    form.verify({
+                        jp_mobile: function (value, item) {
+                            if (!new RegExp("^(070|080|090)[0-9]{8}$").test(value)) {
+                                return '正しい携帯電話番号を入力ください!';
+                            }
+                        }
+                    });
+                    $.ajax({
+                        type: 'get',
+                        url: baseUrl + "/api/examine/info",
+                        headers: {
+                            'Authorization': sessionStorage.getItem('token'),
+                        },
+                        success(data) {
+                            if (data.code == 200) {
+                                name(data)
+                            } else {
+                                layui.msg(data.msg)
+                            }
+                        }
+                    })
+                    let user = sessionStorage.getItem('user')
+                    user = JSON.parse(user)
+                    $("input[name='username']")[0].value = user.username
+                    $("input[name='nickname']")[0].value = user.nickname
+                    $("input[name='email']")[0].value = user.email
+                    $("input[name='mobile']")[0].value = user.mobile
+                });
+                layui.use(['laydate', 'form'], function () {
+                    var laydate = layui.laydate;
+                    var form = layui.form
+                    lay('.test-item').each(function () {
+                        var time = new Date();
+                        var max_data = time.getFullYear();
+                        max_data += '-'
+                        max_data += time.getMonth()
+                        max_data += '-'
+                        max_data += time.getHours()
+                        laydate.render({
+                            elem: this,
+                            lang: 'en',
+                            trigger: 'click',
+                            type: 'date',
+                            max: max_data
+                            , done: function (value, date, endDate) {
+                                var birth = document.getElementById("birth").value;
+                                var re_age = self.GetAge(value)
+                                $('#age').val(re_age)
+                            }
+                        });
+                    });
+                    lay('.test-item2').each(function () {
+                        laydate.render({
+                            elem: this,
+                            lang: 'en',
+                            trigger: 'click',
+                            type: 'date'
+                            , done: function (value, date, endDate) {
+                                console.log(value);
+                                var birth = document.getElementById("birth2").value;
+                                var re_age = self.GetAge(value)
+                                $('#age2').val(re_age)
+                            }
+                        });
+                    });
+                });
+                //计算周岁
+                function GetAge(strBirthday) {
+                    var returnAge,
+                        strBirthdayArr = strBirthday.split("-"),
+                        birthYear = strBirthdayArr[0],
+                        birthMonth = strBirthdayArr[1],
+                        birthDay = strBirthdayArr[2],
+                        d = new Date(),
+                        nowYear = d.getFullYear(),
+                        nowMonth = d.getMonth() + 1,
+                        nowDay = d.getDate();
+                    if (nowYear == birthYear) {
+                        returnAge = 0;//同年 则为0周岁
+                    }
+                    else {
+                        var ageDiff = nowYear - birthYear; //年之差
+                        if (ageDiff > 0) {
+                            if (nowMonth == birthMonth) {
+                                var dayDiff = nowDay - birthDay;//日之差
+                                if (dayDiff < 0) {
+                                    returnAge = ageDiff - 1;
+                                } else {
+                                    returnAge = ageDiff;
+                                }
+                            } else {
+                                var monthDiff = nowMonth - birthMonth;//月之差
+                                if (monthDiff < 0) {
+                                    returnAge = ageDiff - 1;
+                                }
+                                else {
+                                    returnAge = ageDiff;
+                                }
+                            }
+                        } else {
+                            returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+                        }
+                    }
+                    return returnAge; // 返回周岁年龄
+                }
+
+                // 上传图片压缩
+                function canvasDataURL(file, callback) { //压缩转化为base64
+                    var reader = new FileReader()
+                    reader.readAsDataURL(file)
+                    reader.onload = function (e) {
+                        const img = new Image()
+                        const quality = 0.8 // 图像质量
+                        const canvas = document.createElement('canvas')
+                        const drawer = canvas.getContext('2d')
+                        img.src = this.result
+                        img.onload = function () {
+                            canvas.width = img.width
+                            canvas.height = img.height
+                            drawer.drawImage(img, 0, 0, canvas.width, canvas.height)
+                            convertBase64UrlToBlob(canvas.toDataURL(file.type, quality), callback);
+                        }
+                    }
+                }
+
+                function convertBase64UrlToBlob(urlData, callback) { //将base64转化为文件格式
+                    const arr = urlData.split(',')
+                    const mime = arr[0].match(/:(.*?);/)[1]
+                    const bstr = atob(arr[1])
+                    let n = bstr.length
+                    const u8arr = new Uint8Array(n)
+                    while (n--) {
+                        u8arr[n] = bstr.charCodeAt(n)
+                    }
+                    callback(new Blob([u8arr], {
+                        type: mime
+                    }));
+                }
+
+                var width = document.body.clientWidth * 0.8;
+
+                var xhrOnProgress = function (fun) {
+                    xhrOnProgress.onprogress = fun; //绑定监听  
+                    //使用闭包实现监听绑  
+                    return function () {
+                        //通过$.ajaxSettings.xhr();获得XMLHttpRequest对象  
+                        var xhr = $.ajaxSettings.xhr();
+                        //判断监听函数是否为函数  
+                        if (typeof xhrOnProgress.onprogress !== 'function')
+                            return xhr;
+                        //如果有监听函数并且xhr对象支持绑定时就把监听函数绑定上去  
+                        if (xhrOnProgress.onprogress && xhr.upload) {
+                            xhr.upload.onprogress = xhrOnProgress.onprogress;
+                        }
+                        return xhr;
+                    }
+                };
+
+                // 上传证件
+                layui.use(['upload', 'element'], function () {
+                    var $ = layui.jquery
+                        , upload = layui.upload;
+
+                    var element = layui.element;
+
+                    //证件正面上传
+                    var uploadPositive = upload.render({
+                        elem: '#positive'
+                        , url: baseUrl + '/api/attachment/add'
+                        , headers: { 'Authorization': sessionStorage.getItem('token') }
+                        , size: 0
+                        , accept: 'file'
+                        , acceptMime: 'image/*'
+                        , auto: false
+                        , xhr: xhrOnProgress
+                        , progress: function (value) {
+                            element.progress('progressBar', value + '%');
+                        }
+                        , before: function (obj) {
+
+                            layer.open({
+                                type: 1,
+                                title: 'アップロード中',
+                                area: [width + 'px'],
+                                skin: 'layui-layer-molv',
+                                closeBtn: 1,
+                                shadeClose: true,
+                                content: $('#win') //这里content是一个普通的String
+                            });
+                            //预读本地文件示例，不支持ie8
+                            obj.preview(function (index, file, result) {
+                                $('#positiveImg').attr('src', result); //图片链接（base64）
+                            });
+                        }
+                        , choose: function (obj) { //选择文件后的回调
+                            var files = obj.pushFile();
+                            var filesArry = [];
+                            for (var key in files) { //将上传的文件转为数组形式
+                                filesArry.push(files[key])
+                            }
+                            var index = filesArry.length - 1;
+                            var file = filesArry[index]; //获取最后选择的图片,即处理多选情况
+
+                            if (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion.split(";")[1]
+                                .replace(/[ ]/g, "").replace("MSIE", "")) < 9) {
+                                return obj.upload(index, file)
+                            }
+                            canvasDataURL(file, function (blob) {
+                                var aafile = new File([blob], file.name, {
+                                    type: file.type
+                                })
+                                var isLt1M;
+                                if (file.size < aafile.size) {
+                                    isLt1M = file.size
+                                } else {
+                                    isLt1M = aafile.size
+                                }
+
+                                if (isLt1M / 1024 / 1024 > 10) {
+                                    return layer.alert('上传图片过大！')
+                                } else {
+                                    if (file.size < aafile.size) {
+                                        return obj.upload(index, file)
+                                    }
+                                    obj.upload(index, aafile)
+                                }
+                            })
+                        }
+                        , done: function (res) {
+                            //如果上传失败
+                            if (res.code == 200) {
+                                layer.msg(res.msg)
+                                $("input[name='positive']").val(res.id);
+                            } else {
+                                return layer.msg('アップロードエラー');
+                            }
+                            //上传成功
+
+                        }
+                        , error: function () {
+                            //演示失败状态，并实现重传
+                            var demoText1 = $('#positiveText');
+                            demoText1.html('<span style="color: #FF5722;">アップロードエラー</span> <a class="layui-btn layui-btn-now layui-btn-xs demo-reload1">再度アップロード</a>');
+                            demoText1.find('.demo-reload1').on('click', function () {
+                                uploadPositive.upload();
+                            });
+                        }
+                    });
+
+                    //证件反面上传
+                    var uploadOtherSide = upload.render({
+                        elem: '#otherSide'
+                        , url: baseUrl + '/api/attachment/add'
+                        , headers: { 'Authorization': sessionStorage.getItem('token') }
+                        , size: 0
+                        , accept: 'file'
+                        , acceptMime: 'image/*'
+                        , auto: false
+                        , xhr: xhrOnProgress
+                        , progress: function (value) {
+                            element.progress('progressBar', value + '%');
+                        }
+                        , before: function (obj) {
+
+                            layer.open({
+                                type: 1,
+                                title: 'アップロード中',
+                                area: [width + 'px'],
+                                skin: 'layui-layer-molv',
+                                closeBtn: 1,
+                                shadeClose: true,
+                                content: $('#win') //这里content是一个普通的String
+                            });
+                            //预读本地文件示例，不支持ie8
+                            obj.preview(function (index, file, result) {
+                                $('#otherSideImg').attr('src', result); //图片链接（base64）
+
+                            });
+                        }
+                        , choose: function (obj) { //选择文件后的回调
+                            var files = obj.pushFile();
+                            var filesArry = [];
+                            for (var key in files) { //将上传的文件转为数组形式
+                                filesArry.push(files[key])
+                            }
+                            var index = filesArry.length - 1;
+                            var file = filesArry[index]; //获取最后选择的图片,即处理多选情况
+
+                            if (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion.split(";")[1]
+                                .replace(/[ ]/g, "").replace("MSIE", "")) < 9) {
+                                return obj.upload(index, file)
+                            }
+                            canvasDataURL(file, function (blob) {
+                                var aafile = new File([blob], file.name, {
+                                    type: file.type
+                                })
+                                var isLt1M;
+                                if (file.size < aafile.size) {
+                                    isLt1M = file.size
+                                } else {
+                                    isLt1M = aafile.size
+                                }
+
+                                if (isLt1M / 1024 / 1024 > 10) {
+                                    return layer.alert('上传图片过大！')
+                                } else {
+                                    if (file.size < aafile.size) {
+                                        return obj.upload(index, file)
+                                    }
+                                    obj.upload(index, aafile)
+                                }
+                            })
+                        }
+                        , done: function (res) {
+                            if (res.code == 200) {
+                                layer.msg(res.msg)
+                                $("input[name='other_side']").val(res.id);
+                            } else {
+                                return layer.msg('アップロードエラー');
+                            }
+                        }
+                        , error: function () {
+                            //演示失败状态，并实现重传
+                            var demoText2 = $('#otherSideText');
+                            demoText2.html('<span style="color: #FF5722;">アップロードエラー</span> <a class="layui-btn layui-btn-now layui-btn-xs demo-reload2">再度アップロード</a>');
+                            demoText2.find('.demo-reload2').on('click', function () {
+                                uploadOtherSide.upload();
+                            });
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    <div class="fly-footer">
+        <p>古物営業許可第305502007435号 </p>
+        <p><a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备19030271号-1</a> <a href="/"
+                target="_blank">the1sneaker</a></p>
+    </div>
+</body>
+
+</html>

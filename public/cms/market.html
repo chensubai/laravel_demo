@@ -1,0 +1,1322 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>the1sneaker</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="the1sneaker">
+	<meta name="keywords" content="the1sneaker">
+	<link href="./public/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+	<link rel="stylesheet" href="./public/js/layui/css/layui.css">
+	<script src="./public/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="./public/js/bootstrap.min.js"></script>
+	<script src="./public/js/layui/layui.js"></script>
+	<!-- Custom Theme files -->
+	<link href="./public/css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+</script>
+	<meta name="keywords" content="" />
+	<!--Google Fonts-->
+	<link href="./public/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+	<!--JS for animate-->
+	<link href="./public/css/animate.css" rel="stylesheet" type="text/css" media="all">
+	<script src="./public/js/wow.min.js"></script>
+	<script src="./public/js/base.js"></script>
+	<script>
+		new WOW().init();
+	</script>
+	<!--//end-animate-->
+</head>
+
+<body>
+	<div class="first-header">
+		<div class="searchmain">
+			<div class="container">
+				<div class="searchbox">
+					<div class="logo">
+						<h1><a href="./index.html"><img src="./public/img/LOGO.png" alt="logo"></a></h1>
+					</div>
+					<div class="seachdiv">
+						<img id="sicon" src="./public/img/searchblack.png">
+						<input type="search" name="" id="searchhead" placeholder="何をお探しですが？">
+					</div>
+					<div>
+						<img src="./public/img/cha.png" id="cha">
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$('#searchhead').keydown(function (e) {
+				var good_name = $("#searchhead").val()
+				if (good_name == null || good_name == '') {
+					return
+				}
+				if (e.keyCode == 13) {
+					let parse = {
+						good_name: null,
+						productsn: null,
+						page: null,
+						limit: null
+					}
+					parse.good_name = good_name
+					window.location.href = '/market?good_name=' + parse.good_name + '&productsn=' + parse.good_name
+				}
+			})
+		</script>
+		<div class="container">
+			<div class="header">
+				<div class="logo wow fadeInLeft animated" data-wow-delay=".5s">
+					<h1><a href="./index.html"><img src="./public/img/LOGO.png" alt="logo"></a></h1>
+				</div>
+				<nav class="navbar navbar-default">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+					<!--/.navbar-header-->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav animated wow fadeInUp animated animated" data-wow-duration="1200ms"
+							data-wow-delay="500ms">
+							<li class="active"><a href="./index.html" title="ホームページ">ホームページ</a></li>
+							<li><a href="./market.html" title="商品価格">商品価格</a></li>
+							<li><a href="./enquiry.html" title="無料査定">無料査定</a></li>
+							<li><a href="./step.html" title="利用ガイド">利用ガイド</a></li>
+							<!-- <li><a href="./appraisal.html" title="無料鑑定">無料鑑定</a></li> -->
+							<li><a href="./problem.html" title="よくある質問">よくある質問</a></li>
+						</ul>
+					</div>
+				</nav>
+				<div id="sb-search" class="sb-search wow fadeInRight animated" data-wow-delay=".5s"
+					style="line-height: 3;font-size: 14px;">
+					<div class="token layui-hide-xs"> <a href="../memeber/login.html">ログイン </a>
+						<a href="../memeber/register.html"> 新規登録</a>
+					</div>
+					<div class="tokenin">
+						<span class="icon"><img src=" ./public/img/search.png" id="searchicon"></span>
+						<span class="icon"><img onclick="window.location.href='../memeber/order.html'"
+								src=" ./public/img/user.png" title="マイページ"></span>
+						<span class="icon"><img src=" ./public/img/buycar.png" style="position: relative;"
+								onclick="window.location.href='../memeber/order.html'" id="caricon">
+							<span id="shopcar" class="layui-badge">9</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+	<script>
+		let token = sessionStorage.getItem('token')
+		if (token) {
+			$('.token').css('display', 'none')
+			$.ajax({
+				type: 'get',
+				url: baseUrl + "/api/shopping",
+				headers: {
+					'Authorization': sessionStorage.getItem('token'),
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				success(data) {
+					console.log(data);
+					if (data.code == 200) {
+						if (data.data == 0) {
+							$('#shopcar').css('display', 'none')
+						} else {
+							$('#shopcar').html(data.data.total)
+						}
+					} else {
+						layui.msg(data.msg)
+					}
+				}
+			})
+		} else {
+			$('.tokenin').css('display', 'none')
+		}
+		$("#searchicon").click(function () {
+			$(".searchmain").slideDown();
+		});
+		$("#cha").click(function () {
+			$(".searchmain").slideUp();
+		});
+		$('#caricon').click(function () {
+			$.post("member/content/cartsList", function (data) {
+				if (data.code == 0) {
+					console.log(data.data);
+				} else {
+					layer.msg('网络错误!');
+				}
+			})
+		})
+		$(function () {
+			var _nava = $('.navbar-nav a');
+			var _url = window.location.href;
+			var _host = window.location.host;
+			for (var i = 0; i < _nava.length; i++) {
+				var _astr = _nava.eq(i).attr('href');
+				_astr = _astr.split('./')[1]
+				if (_url.indexOf(_astr) != -1) {
+					_nava.eq(i).parent().addClass('active').siblings().removeClass('active');
+				} else if (_url == ('http://' + _host + '/')) {
+					_nava.eq(0).addClass('active').siblings().removeClass('active');
+				}
+			}
+		})
+	</script>
+	<style type="text/css">
+		@media (min-width: 640px) {
+			.logo img {
+				width: 60%;
+				position: relative;
+			}
+		}
+
+		.navbar-default .navbar-nav>li>a:hover,
+		.navbar-default .navbar-nav>li>a:focus {
+			border-bottom: none;
+		}
+
+		.searchmain {
+			width: 100%;
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 99;
+			background-color: #fff;
+			display: none;
+		}
+
+		.seachdiv {
+			width: 70%;
+		}
+
+		.header {
+			display: flex;
+		}
+
+		#searchhead {
+			background-color: transparent;
+			border: none;
+			outline: none;
+			width: 80%;
+		}
+
+		.searchbox {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 12px 0;
+		}
+
+		.sb-search {
+			display: flex;
+		}
+
+		.sb-search a {
+			font-weight: bold;
+		}
+
+		#shopcar {
+			position: absolute;
+			right: 0;
+			background: #E1F3FF !important;
+			border-radius: 50%;
+		}
+
+		.icon {
+			display: inline-block;
+		}
+
+		.icon img {
+			margin: 10px;
+			width: 25px;
+			height: 25px;
+		}
+
+		.icon:hover {
+			border-radius: 100%;
+			background-color: rgba(254, 254, 254, 0.3);
+		}
+
+		.swiper {
+			--swiper-theme-color: #fff !important;
+		}
+
+		.swiper .swiper-pagination-bullet {
+			border-radius: 0%;
+			height: .2rem !important;
+		}
+
+		.swiper-pagination-bullet-active {
+			width: 1rem !important;
+		}
+
+		@media (max-width: 480px) {
+			.sb-search {
+				top: 1rem;
+			}
+
+			.icon img {
+				width: 15px;
+				height: 15px;
+			}
+
+			.searchbox #cha {
+				width: 12.5px;
+			}
+
+			.searchbox #sicon {
+				width: 12.5px;
+			}
+		}
+	</style>
+	<!--navigation end here-->
+	</div>
+	<div class="banner swiper">
+		<!--navigation start here-->
+		<div class="swiper-wrapper" id="swiper">
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+	<link rel="stylesheet" href="./public/css/swiper-bundle.min.css" type="text/css" media="screen" />
+	<script defer src="./public/js/swiper-bundle.min.js"></script>
+	<script type="text/javascript">
+		$.get(baseUrl + "/api/slide", {}, function (data) {
+			let h5 = ''
+			if (data.code == 200) {
+				console.log(data);
+				for (let index = 0; index < data.data.length; index++) {
+					h5 += `<div class="banner-main swiper-slide" style="display: flex;flex-direction: column;background: url(${data.data[index].imagepath});background-size: 100% 100%;">`
+					h5 += `<a href="${data.data[index].line_url}">`
+					if (data.data[index].form_type == 2) {
+						h5 += `<div class="banner-btn"><button class="main-btn"></button></div>`
+					}
+					h5 += `</a></div>`
+				}
+			}
+			$('#swiper').html(h5)
+		})
+	</script>
+	<script>
+		$(window).load(function () {
+			var mySwiper = new Swiper('.swiper', {
+				speed: 1000,
+				autoplay: {
+					delay: 3000
+				},
+				loop: true,
+				disableOnInteraction: false, // 用户操作swiper之后，是否禁止autoplay]。默认为true：停止。
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true
+				}
+			})
+		})</script>
+	<style type="text/css">
+		body {
+			background-color: #f6f6f6;
+		}
+
+		#fh5co-slider {
+			background: #2A528A;
+		}
+
+		h3 {
+			color: #000000;
+		}
+
+		.shosetalk {
+			text-align: center;
+		}
+
+		.main-btn {
+			margin-top: 50%;
+			margin-right: 20%;
+			margin-bottom: 5%;
+			background: url(./public/img/button_normal.png) no-repeat;
+			background-size: 100% 100%;
+			padding: 40px 124px;
+			border: none;
+		}
+
+		.title {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.show-main {
+			color: #1D1D1F;
+			font-size: 2.3em;
+		}
+
+		.sb-search a {
+			color: #fff !important;
+		}
+
+		.before {
+			display: inline-block;
+			width: 180px;
+			height: 1px;
+			background: linear-gradient(89.95deg, rgba(82, 82, 82, 0.03) 20.01%, #000000 77.77%);
+			margin-right: 5px;
+		}
+
+		.after {
+			width: 180px;
+			display: inline-block;
+			height: 1px;
+			background: linear-gradient(89.95deg, rgba(82, 82, 82, 0.03) 20.01%, #000000 77.77%);
+			margin-left: 5px;
+			transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			/* IE 9 */
+			-webkit-transform: rotate(180deg);
+			/* Safari and Chrome */
+		}
+
+		#fh5co-slider .container div {
+			margin-top: 2em;
+			margin-bottom: 2em;
+			/*margin-right: 2em;*/
+		}
+
+		.flex-control-nav {
+			position: relative;
+		}
+
+		.first-header {
+			width: 100%;
+			position: absolute;
+			z-index: 999;
+		}
+
+		.swiper {
+			height: 700px;
+		}
+
+		@media (min-width: 1200px) {
+			.swiper {
+				height: 800px;
+			}
+		}
+
+		@media (min-width: 1400px) {
+			.main-btn {
+				margin-top: 50%;
+			}
+
+			.swiper {
+				height: 1000px;
+			}
+		}
+
+		@media (min-width: 1600px) {
+			.swiper {
+				height: 1100px;
+			}
+		}
+
+		@media (min-width: 1800px) {
+			.swiper {
+				height: 1200px;
+			}
+		}
+
+		@media (min-width: 2000px) {
+			.swiper {
+				height: 1300px;
+			}
+		}
+
+		@media (max-width: 900px) {
+			.swiper {
+				height: 550px;
+			}
+
+			.main-btn {
+				padding: 20px 62px;
+				margin-top: 40%;
+				margin-right: 10%;
+			}
+		}
+
+		@media (max-width: 800px) {
+			.swiper {
+				height: 500px;
+			}
+
+			.main-btn {
+				padding: 20px 62px;
+				margin-top: 50%;
+				margin-right: 10%;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.after {
+				width: 100px;
+			}
+
+			.before {
+				width: 100px;
+			}
+
+			.swiper {
+				height: 360px;
+			}
+
+			.main-btn {
+				padding: 20px 62px;
+				margin-top: 60%;
+				margin-right: 10%;
+			}
+		}
+
+		.banner-main img {
+			margin-top: 10%;
+		}
+
+		.banner-btn {
+			display: flex;
+			justify-content: flex-end
+		}
+
+		.main-btn:hover {
+			background: url(./public/img/button_hover.png);
+			background-size: 100% 100%;
+			border: none;
+		}
+
+		.recom {
+			position: relative;
+		}
+
+		.recom a {
+			padding: 0 1rem;
+			background: linear-gradient(180deg, #FAFAFA 0%, #FBFBFB 100%);
+		}
+
+		.recom div {
+			margin: 1em 0;
+		}
+
+		.good {
+			font-weight: bold;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.number {
+			left: 40px;
+			top: 20px;
+			position: absolute;
+			width: 20px
+		}
+
+		.events {
+			background: linear-gradient(90deg, #F8F9FF 1.21%, #EBF1F4 100%);
+		}
+
+		.talklist {
+			text-align: left;
+			font-size: 1.5em;
+			padding: 0.5em 0;
+			padding-left: 30%;
+			display: flex;
+			align-items: center;
+		}
+
+		.talk {
+			padding-left: 0.5em;
+		}
+
+		.talkbtn button {
+			background: url(./public/img/talkbtn_normal.png) no-repeat;
+			background-size: 100% 100%;
+			padding: 30px 90px;
+			border: none;
+			margin-top: 2em;
+		}
+
+		.talkbtn button:hover {
+			background: url(./public/img/talkbtn_hover.png);
+			background-size: 100% 100%;
+		}
+
+		.sanji {
+			width: 0;
+			height: 0;
+			border-left: 10px solid rgba(2, 2, 2, 1);
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+		}
+
+		@media (max-width: 900px) {
+			.talklist {
+				padding-left: 15%;
+			}
+		}
+
+		@media (max-width: 700px) {
+			.talklist {
+				padding-left: 0;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.show-main {
+				font-size: 12px;
+				font-weight: bold;
+			}
+
+			.talklist {
+				padding-left: 15%;
+			}
+		}
+	</style>
+	<script src="./public/js/bootstrap-treeview.js"></script>
+	<!-- <div id='input-ssss12' class="col-md-9 col-lg-6">
+  <form class="layui-form" action="">
+    <div class="layui-form-item">
+      <div class="layui-input-block i12">
+        <input type="text" id="good_name" name="good_name" lay-verify="required" placeholder="请输入商品名称"
+          autocomplete="off" class="layui-input">
+        <div id="ssk" class="col-md-1"><img src="/static/admin/img/suk.png" alt=""> </div>
+      </div>
+      <div class="history" style="display: none;">
+        <div class="his_top">
+          <div class="tit">搜索记录</div>
+          <div class="del">删除记录</div>
+        </div>post
+        <div class="his_main"></div>
+      </div>
+    </div>
+  </form>
+</div> -->
+	<div class="services w3l-4">
+		<div class="container mainbox">
+			<div class="tree">
+				<!-- <div id="treeview1"></div> -->
+				<div class="somemain">
+					<div class="count">
+						<div>対象商品</div>
+						<div id="total"><span style="font-weight: bold;font-size: large;">
+								<?php if(!empty($total)){ echo number_format((int)$total); }else{echo 0; } ?>
+							</span><span>件</span></div>
+					</div>
+					<span class="sj">
+					</span>
+				</div>
+				<div class="treemin" id="treemin"></div>
+			</div>
+			<div id="treeview_23">
+				{volist name="info" id="vo"}
+				<div class="col-md-4 services-grid">
+					<div class="grid">
+						<a href="/details/{$vo.catid}/{$vo.id}" class="mask">
+							<img src="__UPLOAD__/{$vo.path}" class="img-responsive zoom-img">
+						</a>
+						<p class="good">{:mb_substr($vo.title,0,30)}</p>
+						<p>品番：{$vo.itemnumber}<br />買取金額：￥
+							<?php if(!empty($vo['max_price'])){ echo number_format((int)$vo['max_price']); }else{echo 0; } ?>
+						</p>
+
+					</div>
+				</div>
+				{/volist}
+				<div id="demo1"></div>
+			</div>
+		</div>
+		<div style="display: flex;justify-content: center;align-items: center;">
+			<?php echo $page ?>
+		</div>
+	</div>
+
+	<style type="text/css">
+		.treemin {
+			width: 90%;
+		}
+
+		.somemain {
+			width: 90%;
+			position: relative;
+		}
+
+		.sj {
+			position: absolute;
+			top: 35%;
+			right: -20px;
+			width: 0;
+			height: 0;
+			border-top: 10px solid transparent;
+			border-left: 20px solid rgba(47, 46, 65, 1);
+			border-bottom: 10px solid transparent;
+		}
+
+		.count {
+			padding: 20px;
+			border-radius: 10px;
+			background-color: rgba(47, 46, 65, 1);
+			color: #fff;
+		}
+
+		#good_name {
+			outline: 2px solid;
+		}
+
+		.glyphicon {
+			color: #333;
+			line-height: 1;
+			font-size: 1em;
+		}
+
+		.tree-modle {
+			position: relative;
+		}
+
+		.mainbox {
+			display: flex;
+		}
+
+		.type {
+			position: absolute;
+			width: 30px;
+			height: 30px;
+			display: none;
+			top: -6rem;
+			right: 1rem;
+			cursor: pointer;
+		}
+
+		#input-ssss12 {
+			width: 100%;
+			text-align: center;
+			padding: 5% 20% 0 10%;
+		}
+
+		.i12 {
+			display: flex;
+			align-items: center;
+		}
+
+		#ssk {
+			width: 30px;
+			height: 30px;
+			margin-left: -30px;
+		}
+
+		#ssk img {
+			width: 30px;
+			height: 30px;
+			position: relative;
+			right: 1rem;
+		}
+
+		.col-md-3 ul {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.col-md-3 li {
+			display: flex;
+		}
+
+		.treeview1 ul {
+			text-align: center;
+		}
+
+		.services-grid {
+			margin-bottom: 1em;
+		}
+
+		.services-grid p {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.services-grid .good {
+			color: rgba(66, 66, 69, 1);
+			text-transform: capitalize;
+			margin: 0.5em 0 0.3em;
+		}
+
+		.tree {
+			width: 25%;
+		}
+
+		#treeview_23 {
+			width: 75%;
+		}
+
+		.grid {
+			background-color: #EEEDED;
+			height: 90%;
+		}
+
+		.history {
+			margin-left: 110px;
+			border: 2px solid #d2d2d2;
+			border-top: none;
+			font-size: 14px;
+			color: #555;
+			padding-bottom: 10px;
+		}
+
+		.his_top {
+			height: 2rem;
+		}
+
+		.tit {
+			float: left;
+			margin-left: 2%;
+		}
+
+		.del {
+			float: right;
+			margin-right: 2%;
+			cursor: pointer;
+		}
+
+		.his_go {
+			text-align: left;
+			padding-left: 2em;
+			cursor: pointer;
+		}
+
+		.his_none {
+			text-align: center;
+		}
+
+		.grid {
+			display: flex;
+			flex-direction: column;
+		}
+
+		#pages {
+			display: flex;
+		}
+
+		#pages li {
+			display: flex;
+			align-items: center;
+			padding: 15px 20px;
+		}
+
+		#pages li a {
+			color: #BCBCBC;
+		}
+
+		#pages li:nth-child(1) {
+			color: rgba(188, 188, 188, 1);
+			border: 1px solid rgba(188, 188, 188, 1);
+			border-radius: 50%;
+			background-color: rgba(255, 255, 255, 1);
+		}
+
+		#pages li:last-child {
+			color: #fff;
+			border-radius: 50%;
+			background: linear-gradient(180deg, #000000 0%, #2F2E41 100%);
+		}
+
+		#pages li:last-child a {
+			color: #fff;
+		}
+
+		.good-fater {
+			padding: 10px 15px;
+			margin-bottom: -1px;
+			background-color: #fff;
+			border: 1px solid #ddd;
+		}
+
+		.goodli {
+			width: 95%;
+			padding: 10px 15px;
+			margin-bottom: -1px;
+			background-color: #fff;
+			border: 1px solid #ddd;
+		}
+
+		@media screen and (min-width: 1440px) {
+			#input-ssss12 {
+				padding: 5% 25% 5% 20%;
+			}
+		}
+
+		@media screen and (max-width: 750px) {
+
+			#pages li {
+				padding: 7px 10px;
+			}
+
+			.glyphicon-chevron-right:before {
+				font-size: 14px;
+			}
+
+			.glyphicon-chevron-left:before {
+				font-size: 14px;
+			}
+
+			.count {
+				margin-right: 0;
+			}
+		}
+
+		@media screen and (max-width: 600px) {
+			.tree {
+				width: 100%;
+			}
+
+			.somemain {
+				width: 100%;
+			}
+
+			.treemin {
+				width: 100%;
+			}
+
+			.sj {
+				display: none;
+			}
+
+			#treeview_23 {
+				width: 100%;
+			}
+
+			.mainbox {
+				flex-direction: column;
+			}
+		}
+
+		@media screen and (max-width: 480px) {
+
+			.services-grid {
+				width: 50%;
+			}
+
+			.history {
+				margin-left: 0;
+			}
+
+			.layui-input-block {
+				margin-left: 0px;
+			}
+
+			.glyphicon-chevron-right:before {
+				font-size: 12px;
+			}
+
+			.glyphicon-chevron-left:before {
+				font-size: 12px;
+			}
+
+			#pages li {
+				padding: 5px 10px;
+			}
+		}
+	</style>
+	<script type="text/javascript">
+		$(function () {
+			let url = location.href
+			if (url.indexOf('good_name') == -1) {
+				if ($('#pages li').children().eq(0)[0]) {
+					$('#pages li').children().eq(0).addClass('glyphicon glyphicon-chevron-left')
+					$('#pages li').children().eq(0)[0].innerText = ''
+					$('#pages li').children().eq($('#pages li').children().length - 1).addClass('glyphicon glyphicon-chevron-right')
+					$('#pages li').children().eq($('#pages li').children().length - 1)[0].innerText = ''
+				}
+				var defaultData = new Array();
+				// 获取菜单
+				layui.use(['layer'], function () {
+					layer = layui.layer;
+					$.post("/cms/index/getMarketMenu", {}, function (data) {
+						if (data.code == 0) {
+							var menu = new Array();
+							$.each(data.data, function (index, itemparent) {
+								var _tag = new Array("0");
+								var _data = { text: itemparent.catname, tags: _tag, nodes: [], nodeId: itemparent.id }
+								if (itemparent.son.length > 0) {
+									$.each(itemparent.son, function (index, item) {
+										var _data_child = { text: item.catname, href: item.url + '?link=' + itemparent.id + "-", tags: _tag, nodeId: item.id }
+										_data['nodes'].push(_data_child)
+									});
+								}
+								menu.push(_data);
+							});
+							defaultData = menu;
+							$('#treemin').treeview({
+								data: defaultData,
+								expandIcon: "glyphicon glyphicon-chevron-down",
+								collapseIcon: "glyphicon glyphicon-chevron-up",//可收缩的节点图标
+								enableLinks: true,
+								levels: 1,
+								selectedBackColor: "rgba(197, 208, 225, 1)",//设置选定节点的背景色
+							});
+							var domain = window.location.pathname;
+							if (domain == '/market') {
+								$('#treemin').treeview('expandNode', [0, { silent: true }]);
+								$('li[data-nodeid="1"]').css({ "color": "#FFFFFF", "background-color": "rgba(197, 208, 225, 1)" })
+							}
+							let someid = window.location.pathname.split('market/')[1]
+							let parent = window.location.href.split('=')[1]
+							parent = parent.split('-')[0]
+							if ($('li[id =' + someid + ']')) {
+								let p = $('li[id =' + parent + ']').attr('data-nodeid') - 0
+								$('#treemin').treeview('expandNode', [p, { silent: true }]);
+								$('li[id =' + someid + ']').css({ "color": "#FFFFFF", "background-color": "rgba(197, 208, 225, 1)" })
+							}
+						} else {
+							layer.msg('获取菜单失败!');
+						}
+						if (data.code == 0) {
+							var html_data = '';
+							$.each(data.data, function (index, item) {
+								// var _tag = new Array("0");
+								html_data += '<div  style="display: flex;align-items: center;" onclick="ul_click(' + item.id + ')" >';
+								html_data += '<ul id ="ul' + item.id + '" style="width: 100%;" class="good-fater">' + item.catname + '</ul>'
+								html_data += '<span style="position: relative;right: 1.5rem;"><i id="i_' + item.id + '"class="fa fa-angle-down" aria-hidden="false"></i></span>'
+								html_data += '</div>';
+								html_data += '<div id="div_' + item.id + '" style="display: flex;flex-wrap : wrap;">';
+								// var _data = {text:item.catname, href:item.url, tags:_tag, nodes:[]}
+								if (item.son.length > 0) {
+									$.each(item.son, function (index, item) {
+										html_data += '<li  id="bt_' + item.id + '" onclick="but_click(' + item.id + ')" class="goodli">' + item.catname + '</li>'
+									});
+								}
+								html_data += '</div>';
+
+							});
+							$('#treeview1').html(html_data)
+						} else {
+							layer.msg('获取菜单失败!');
+						}
+					}, "json");
+
+					// layer.msg(domain)
+				});
+			} else {
+				$('#pages').css('display', 'none')
+				$('.tree').css('opacity', '0')
+			}
+		});
+
+		//处理div 下的but
+		function ul_click(id) {
+			console.log(id)
+			var div_id = '#div_' + id
+			var i_id = '#i_' + id
+			var name_class = $(i_id).prop("class");
+			console.log(name_class)
+			if (name_class == 'fa fa-angle-down') {
+				$(div_id).hide();
+				$(i_id).attr("class", "fa fa-angle-up");
+			} else {
+				$(i_id).attr("class", 'fa fa-angle-down')
+				$(div_id).show();
+			}
+			// $(dj).hide();
+			// $(dj).hide();
+			// //改样式
+			// $(div_id).hide();
+
+			// $(div_id).show();
+		}
+
+		//点击刷新左边数据和处理button样式
+		function but_click(id) {
+			var dj = '#bt_' + id;
+			$(dj).css("back");
+			//样式处理
+
+			//请求处理
+			$.post("/cms/index/market_data", { id: id }, function (data) {
+				if (data.code == 0) {
+					var ss = '';
+					$.each(data.data, function (index, item) {
+						ss += '<div class="col-md-4 services-grid">'
+						ss += '<div class = "gird">'
+						ss += '<a href="/details/' + item.catid + '/' + item.id + '" class="mask">'
+						ss += '<img src="__UPLOAD__/' + item.path + '" class="img-responsive zoom-img">'
+						ss += '</a>'
+						ss += '<p class="good">' + item.title + '</p>'
+						ss += '<p>品番：' + item.itemnumber + '<br/>買取金額：' + item.max_price + '</p>'
+						ss += '</div>'
+						ss += '</div>'
+					});
+					$('#treeview_23').html(ss)
+				} else {
+					layer.msg('网络错误!');
+				}
+			}, "json");
+		}
+
+		$('#ssk').click(function () {
+			//  console.log(12323);
+			var good_name = $("#good_name").val()
+			if (good_name != undefined && good_name.length > 0) {
+				his_mian.unshift(good_name)
+				localStorage.history = JSON.stringify(his_mian)
+				$('.history').css('display', 'none')
+				$.post("/cms/index/market_data", { good_name: good_name }, function (data) {
+
+					if (data.code == 0) {
+
+						var ss = '';
+						$.each(data.data, function (index, item) {
+							ss += '<div class="col-md-3 services-grid" style="height: 305.69px">'
+							ss += '<a href="/details/' + item.catid + '/' + item.id + '" class="mask">'
+							ss += '<img src="__UPLOAD__/' + item.path + '"class="img-responsive zoom-img">'
+							ss += '</a>'
+							ss += '<p class="good">' + item.title + '</p>'
+							ss += '<p>品番：' + item.itemnumber + '<br/>買取金額：' + item.max_price + '</p>'
+							ss += '</div>'
+						});
+						$('#treeview_23').html(ss)
+					} else {
+						layer.msg('网络错误!');
+					}
+				}, "json");
+
+			} else {
+				layer.msg("商品名を空白にすることはできません")
+			}
+		});
+
+		//处理div 下的but
+		function ul_click(id) {
+			console.log(id)
+			var div_id = '#div_' + id
+			var i_id = '#i_' + id
+			var name_class = $(i_id).prop("class");
+			console.log(name_class)
+			if (name_class == 'fa fa-angle-down') {
+				$(div_id).hide();
+				$(i_id).attr("class", "fa fa-angle-up");
+			} else {
+				$(i_id).attr("class", 'fa fa-angle-down')
+				$(div_id).show();
+			}
+			// $(dj).hide();
+			// $(dj).hide();
+			// //改样式
+			// $(div_id).hide();
+
+			// $(div_id).show();
+		}
+
+		//点击刷新左边数据和处理button样式
+		function but_click(id) {
+			var dj = '#bt_' + id;
+			$(dj).css("back");
+			//样式处理
+
+			//请求处理
+			$.post("/cms/index/market_data", { id: id }, function (data) {
+				if (data.code == 0) {
+					var ss = '';
+					$.each(data.data, function (index, item) {
+						ss += '<div class="col-md-3 services-grid">'
+						ss += '<a href="/details/' + item.catid + '/' + item.id + '" class="mask">'
+						ss += '<img src="__UPLOAD__/' + item.path + '" class="img-responsive zoom-img" >'
+						ss += '</a>'
+						ss += '<p class="good">' + item.title + '</p>'
+						ss += '<p>品番：' + item.itemnumber + '<br/>買取金額：' + item.max_price + '</p>'
+						ss += '</div>'
+					});
+					$('#treeview_23').html(ss)
+				} else {
+					layer.msg('网络错误!');
+				}
+			}, "json");
+		}
+
+
+	</script>
+	<div class="footer">
+		<div class="container">
+			<div class="footer-grids">
+				<div class="col-md-2 footer-grid wow fadeInLeft animated" data-wow-delay=".5s">
+					<ul>
+						<li><a href="../cms/single.html?catid=1&index=0">利用規約</a></li>
+						<li><a href="../cms/single.html?catid=1&index=1">プライバシーポリシー</a></li>
+						<li><a href="../cms/single.html?catid=1&index=2">個人情報保護法</a></li>
+						<li><a href="../cms/single.html?catid=1&index=3">ソーシャルメディアポリシー</a></li>
+						<li><a href="../cms/single.html?catid=1&index=4">特定商取引法に基づく表記</a></li>
+					</ul>
+				</div>
+				<div class="col-md-2 footer-grid animated wow fadeInUp animated animated" data-wow-duration="1200ms"
+					data-wow-delay="500ms">
+					<ul>
+						<li>
+							<a href="../cms/market.html">商品価格</span></a>
+						</li>
+						<li>
+							<a href="../cms/enquiry.html">無料査定</span></a>
+						</li>
+						<li>
+							<a href="../cms/step.html">利用ガイド</span></a>
+						</li>
+						<!-- <li>
+							<a href="../cms/appraisal.html">無料鑑定</span></a>
+						</li> -->
+						<li>
+							<a href="../cms/problem.html">よくある質問</span></a>
+						</li>
+					</ul>
+				</div>
+				<div id="shop">
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="foot-info">
+				<div class="info">
+					<ul>
+						<li><a href="/"><img src="./public/img/footlogo.png" alt=""></a></li>
+						<li><a href="/singlepage2/128">会社紹介</a></li>
+						<li><a href="/singlepage2/129">お問い合わせ</a></li>
+						<li><a href="/singlepage2/130">採用情報</a></li>
+						<li><a href="/singlepage2/42">利用規約</a></li>
+					</ul>
+				</div>
+				<div class="col-md-2 footer-grid animated wow fadeInUp animated animated" data-wow-duration="1200ms"
+					data-wow-delay="500ms">
+					<ul class="social-icons1">
+						<li><a href="https://twitter.com/the1sneaker"><img src="./public/img/twitter.png"
+									style="height:30px ;width:30px;"></img></a></li>
+						<li><a href="https://twitter.com/the1sneaker"><img src="./public/img/ins.png"
+									style="height:30px ;width:30px;"></img></a></li>
+						<li><a href="https://twitter.com/the1sneaker"><img src="./public/img/line.png"
+									style="height:30px ;width:30px;"></img></a></li>
+						<li><a href="https://twitter.com/the1sneaker"><img src="./public/img/mail.png"
+									style="height:30px ;width:30px;"></img></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="copy-right wow fadeInUp animated animated" data-wow-duration="1200ms" data-wow-delay="500ms">
+				<div class="earth">
+					<img src="./public/img/earth.png"><span>日本/日本語</span>
+				</div>
+				<p>東京都公安委員会 第305502007435号</p>
+				<p>FIT株式会社 <a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备19030271号-1</a> <a href="/"
+						target="_blank" title="the1sneaker">the1sneaker</a></p>
+			</div>
+		</div>
+	</div>
+	<style>
+		.footer {
+			background: #333;
+			margin-top: 40px;
+			color: #9FA3A6;
+		}
+
+		.footer a {
+			color: #9FA3A6;
+		}
+
+		.footer a:hover {
+			color: #fff;
+		}
+
+		.footer a span {
+			color: #9FA3A6;
+		}
+
+		.footer a span:hover {
+			color: #fff;
+		}
+
+		.footer .footer-grid h3 {
+			color: #fff;
+		}
+
+		.footer-grids {
+			margin-bottom: 5em;
+		}
+
+		.email-link {
+			word-wrap: break-word;
+		}
+
+		.foot-info {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding-bottom: 5px;
+			border-bottom: 1px solid #fff;
+		}
+
+		.info ul {
+			display: flex;
+		}
+
+		.info ul li {
+			padding: 0 20px;
+		}
+
+		.earth {
+			float: right;
+		}
+
+		@media (max-width: 480px) {
+			.info ul {
+				flex-direction: column;
+			}
+
+			.copy-right p {
+				font-size: 14px;
+			}
+		}
+	</style>
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?9fd62443f08c83cfd1fb5c01f92a3448";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+
+		//刷新底部栏
+		$(function () {
+			layui.use(['layer'], function () {
+				$.get(baseUrl + "/api/shop", {}, function (data) {
+					if (data.code == 200) {
+						var h5 = ''
+						$.each(data.data, function (index, item) {
+							if (index >= 2) {
+								return false;
+							} else {
+								h5 += '<div class="col-md-2 footer-grid wow fadeInRight animated" data-wow-delay=".5s">'
+								h5 += '<p>' + item.shop_address + '</p>'
+								h5 += '<div class="footer-grid-address">'
+								h5 += '<p>Tel: ' + item.shop_phone + '</p>'
+								h5 += `<p>Email: <a class="email-link" href="mailto:${item.shop_email}">${item.shop_email}</a></p>`
+								h5 += '</div>'
+								h5 += '</div>'
+							}
+						});
+						$('#shop').html(h5)
+					} else {
+						layer.alert(data.msg, {
+							icon: 5,
+							title: "信息"
+						});
+					}
+				}, "json");
+			})
+		})
+	</script>
+</body>
+
+</html>

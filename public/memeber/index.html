@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>用户中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="./public/css/bootstrap.min.css" media="screen" type="text/css">
+    <link rel="stylesheet" href="./public/js/layui/css/layui.css">
+    <link rel="stylesheet" href="./public/css/global.css">
+    <link rel="stylesheet" href="./public/font/iconfont.css">
+    <script src="./public/js/layui/layui.js"></script>
+    <script src="./public/js/jquery-1.11.0.min.js"></script>
+    <script src="./public/js/bootstrap.min.js"></script>
+    <script src="./public/js/base.js"></script>
+    <script>
+        layui.config({
+            base: './public/js/mods/'
+        }).extend({
+            fly: 'index'
+        }).use('fly');
+    </script>
+</head>
+
+<body class="body">
+    <div class="fly-header layui-bg-black">
+        <div class="layui-container">
+            <a class="fly-logo" href="../cms/index.html">
+                <img class="memeberlogo" src="./public/img/LOGO.png" alt="layui">
+            </a>
+            <ul class="layui-nav fly-nav-user" style="display: flex;align-items: center;">
+                <!-- 登入后的状态 -->
+                <li class="layui-nav-item">
+                    <a class="fly-nav-avatar" href="javascript:;">
+                        <img src="" id="avatar">
+                        <cite><span id="username"></span></cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="../memeber/index.html"><i class="layui-icon">&#xe612;</i>マイページ</a></dd>
+                        <dd><a href="../memeber/profile.html"><i class="layui-icon">&#xe620;</i>会員情報</a></dd>
+                        <hr style="margin: 5px 0;">
+                        <dd><a href="../memeber/login.html" style="text-align: center;">ログアウト</a></dd>
+                    </dl>
+                </li>
+                <span class="layui-hide-xs" style="color: #000;">|</span>
+                <span class="layui-hide-xs" style="color: #000;">日本 (日本語 / ¥ JPY)</span>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="layui-container">
+            <a class="fly-logo" href="../cms/index.html">
+                ホームページx
+            </a>
+        </div>
+    </div>
+    <div class="layui-container fly-marginTop fly-user-main">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+            <li class="layui-nav-item">
+                <a href="../memeber/index.html"><i class="iconfont icon-people"></i>&nbsp;アカウント概要</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/shoporder.html"><i class="iconfont icon-oschina"></i>&nbsp;店頭履歴</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/order.html"><i class="iconfont icon-caigou"></i>&nbsp;郵送履歴</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/enquiry.html"><i class="iconfont icon-shenhe"></i>&nbsp;查定履歴</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/profile.html"><i class="iconfont icon-setup"></i>&nbsp;会員情報</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../memeber/car.html"><i class="iconfont icon-caigou-xianxing"></i>&nbsp;カート</a>
+            </li>
+        </ul>
+        <div class="site-tree-mobile layui-hide">
+            <i class="layui-icon">&#xe602;</i>
+        </div>
+        <div class="site-mobile-shade"></div>
+        <div class="site-tree-mobile layui-hide">
+            <i class="layui-icon">&#xe602;</i>
+        </div>
+        <div class="site-mobile-shade"></div>
+        <div class="fly-panel fly-panel-user" pad20 style="padding-top:20px;">
+            <style>
+                .layui-laydate .layui-this {
+                    background-color: #a8b6cb !important;
+                }
+
+                .layui-form-select dl dd.layui-this {
+                    background-color: #a8b6cb !important;
+                }
+
+                .layui-laypage .layui-laypage-curr .layui-laypage-em {
+                    background-color: #DBE1EA;
+                }
+
+                .layui-form-checked[lay-skin=primary] i {
+                    background-color: #a8b6cb;
+                }
+
+                .layui-btn-now {
+                    background: #8ac5e7;
+                }
+
+                .layui-btn-now1 {
+                    background-color: #84aeed;
+                }
+
+                .layui-nav .layui-nav-item a {
+                    color: #000;
+                }
+
+                .layui-nav .layui-nav-item a:hover,
+                .layui-nav .layui-this a {
+                    color: #000;
+                    text-decoration: none;
+                }
+
+                .memeberlogo {
+                    width: 30%;
+                }
+
+                .layui-tab-brief>.layui-tab-title .layui-this {
+                    color: #728EB7;
+                }
+
+                .layui-tab-brief>.layui-tab-more li.layui-this:after,
+                .layui-tab-brief>.layui-tab-title .layui-this:after {
+                    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+                }
+            </style>
+            <div class="layui-row layui-col-space20">
+                <div class="layui-col-md6">
+                    <div class="fly-home fly-panel main">
+                        <div><img src="{$userinfo.avatar}"></div>
+                        <div>
+                            <div> <span id="username1"></span></div>
+                            <div><i class="iconfont icon-mail"></i><span id="email"></span></div>
+                            <div>Hi，<span id="username2"></span>，あなたはもうthe1snaker会員。</div>
+                            <div class="link"><a href="./profile.html">パスワード変更></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card num">
+                        <div>
+                            買取履歴
+                        </div>
+                        <div>
+                            <p class="amount"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card num">
+                        <div>
+                            査定履歴
+                        </div>
+                        <div>
+                            <p class="point"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <style>
+                body {
+                    background-color: rgba(240, 241, 242, 1);
+                }
+
+                .main {
+                    display: flex;
+                    text-align: left;
+                    justify-content: space-around;
+                    height: 222px;
+                }
+
+                .fly-home {
+                    background-color: #fff;
+                }
+
+                .fly-home img {
+                    width: 60px;
+                    height: 60px;
+                }
+
+                .num {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+                    height: 100px;
+                }
+
+                .link {
+                    position: relative;
+                    bottom: -50%;
+                    right: 0;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+
+                .link a {
+                    text-decoration: none;
+                    color: rgba(0, 149, 255, 1);
+                    font-size: small;
+                }
+
+                .layui-nav .layui-nav-item a:hover,
+                .layui-nav .layui-this a {
+                    color: black;
+                }
+            </style>
+            <script>
+                let user = sessionStorage.getItem('user')
+                user = JSON.parse(user)
+                $('#avatar').attr('src', user.avatar)
+                $('#username').html(user.username)
+                $('#username1').html(user.username)
+                $('#username2').html(user.username)
+                $('#email').html(user.email)
+                $.ajax({
+                    type: 'get',
+                    url: baseUrl + "/api/materiel/list",
+                    headers: {
+                        'Authorization': sessionStorage.getItem('token'),
+                    },
+                    success(data) {
+                        console.log(data);
+                        if (data.code == 200) {
+                            $('.point').html(data.data.total)
+                        } else {
+                            layui.msg(data.msg)
+                        }
+                    }
+                })
+                $.ajax({
+                    type: 'get',
+                    url: baseUrl + "/api/orderList?order_type=1&status=7",
+                    headers: {
+                        'Authorization': sessionStorage.getItem('token'),
+                    },
+                    success(data) {
+                        if (data.code == 200) {
+                            $('.amount').html(data.data.total)
+                        } else {
+                            layui.msg(data.msg)
+                        }
+                    }
+                })
+            </script>
+        </div>
+    </div>
+    <div class="fly-footer">
+        <p>古物営業許可第305502007435号 </p>
+        <p><a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备19030271号-1</a> <a href="/"
+                target="_blank">the1sneaker</a></p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,946 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>the1sneaker</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="the1sneaker">
+	<meta name="keywords" content="the1sneaker">
+	<link href="./public/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+	<link rel="stylesheet" href="./public/js/layui/css/layui.css">
+	<script src="./public/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="./public/js/bootstrap.min.js"></script>
+	<script src="./public/js/layui/layui.js"></script>
+	<!-- Custom Theme files -->
+	<link href="./public/css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+</script>
+	<meta name="keywords" content="" />
+	<!--Google Fonts-->
+	<link href="./public/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+	<!--JS for animate-->
+	<link href="./public/css/animate.css" rel="stylesheet" type="text/css" media="all">
+	<script src="./public/js/wow.min.js"></script>
+	<script src="./public/js/base.js"></script>
+	<script>
+		new WOW().init();
+	</script>
+	<!--//end-animate-->
+</head>
+
+<body>
+	<div class="first-header">
+		<div class="searchmain">
+			<div class="container">
+				<div class="searchbox">
+					<div class="logo">
+						<h1><a href="./index.html"><img src="./public/img/LOGO.png" alt="logo"></a></h1>
+					</div>
+					<div class="seachdiv">
+						<img id="sicon" src="./public/img/searchblack.png">
+						<input type="search" name="" id="searchhead" placeholder="何をお探しですが？">
+					</div>
+					<div>
+						<img src="./public/img/cha.png" id="cha">
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$('#searchhead').keydown(function (e) {
+				var good_name = $("#searchhead").val()
+				if (good_name == null || good_name == '') {
+					return
+				}
+				if (e.keyCode == 13) {
+					let parse = {
+						good_name: null,
+						productsn: null,
+						page: null,
+						limit: null
+					}
+					parse.good_name = good_name
+					window.location.href = '/market?good_name=' + parse.good_name + '&productsn=' + parse.good_name
+				}
+			})
+		</script>
+		<div class="container">
+			<div class="header">
+				<div class="logo wow fadeInLeft animated" data-wow-delay=".5s">
+					<h1><a href="./index.html"><img src="./public/img/LOGO.png" alt="logo"></a></h1>
+				</div>
+				<nav class="navbar navbar-default">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+					<!--/.navbar-header-->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav animated wow fadeInUp animated animated" data-wow-duration="1200ms"
+							data-wow-delay="500ms">
+							<li class="active"><a href="./index.html" title="ホームページ">ホームページ</a></li>
+							<li><a href="./market.html" title="商品価格">商品価格</a></li>
+							<li><a href="./enquiry.html" title="無料査定">無料査定</a></li>
+							<li><a href="./step.html" title="利用ガイド">利用ガイド</a></li>
+							<!-- <li><a href="./appraisal.html" title="無料鑑定">無料鑑定</a></li> -->
+							<li><a href="./problem.html" title="よくある質問">よくある質問</a></li>
+						</ul>
+					</div>
+				</nav>
+				<div id="sb-search" class="sb-search wow fadeInRight animated" data-wow-delay=".5s"
+					style="line-height: 3;font-size: 14px;">
+					<div class="token layui-hide-xs"> <a href="../memeber/login.html">ログイン </a>
+						<a href="../memeber/register.html"> 新規登録</a>
+					</div>
+					<div class="tokenin">
+						<span class="icon"><img src=" ./public/img/search.png" id="searchicon"></span>
+						<span class="icon"><img onclick="window.location.href='../memeber/order.html'"
+								src=" ./public/img/user.png" title="マイページ"></span>
+						<span class="icon"><img src=" ./public/img/buycar.png" style="position: relative;"
+								onclick="window.location.href='../memeber/order.html'" id="caricon">
+							<span id="shopcar" class="layui-badge">9</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+	<script>
+		let token = sessionStorage.getItem('token')
+		if (token) {
+			$('.token').css('display', 'none')
+			$.ajax({
+				type: 'get',
+				url: baseUrl + "/api/shopping",
+				headers: {
+					'Authorization': sessionStorage.getItem('token'),
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				success(data) {
+					console.log(data);
+					if (data.code == 200) {
+						if (data.data == 0) {
+							$('#shopcar').css('display', 'none')
+						} else {
+							$('#shopcar').html(data.data.total)
+						}
+					} else {
+						layui.msg(data.msg)
+					}
+				}
+			})
+		} else {
+			$('.tokenin').css('display', 'none')
+		}
+		$("#searchicon").click(function () {
+			$(".searchmain").slideDown();
+		});
+		$("#cha").click(function () {
+			$(".searchmain").slideUp();
+		});
+		$('#caricon').click(function () {
+			$.post("member/content/cartsList", function (data) {
+				if (data.code == 0) {
+					console.log(data.data);
+				} else {
+					layer.msg('网络错误!');
+				}
+			})
+		})
+		$(function () {
+			var _nava = $('.navbar-nav a');
+			var _url = window.location.href;
+			var _host = window.location.host;
+			for (var i = 0; i < _nava.length; i++) {
+				var _astr = _nava.eq(i).attr('href');
+				_astr = _astr.split('./')[1]
+				if (_url.indexOf(_astr) != -1) {
+					_nava.eq(i).parent().addClass('active').siblings().removeClass('active');
+				} else if (_url == ('http://' + _host + '/')) {
+					_nava.eq(0).addClass('active').siblings().removeClass('active');
+				}
+			}
+		})
+	</script>
+	<style type="text/css">
+		@media (min-width: 640px) {
+			.logo img {
+				width: 60%;
+				position: relative;
+			}
+		}
+
+		.navbar-default .navbar-nav>li>a:hover,
+		.navbar-default .navbar-nav>li>a:focus {
+			border-bottom: none;
+		}
+
+		.searchmain {
+			width: 100%;
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 99;
+			background-color: #fff;
+			display: none;
+		}
+
+		.seachdiv {
+			width: 70%;
+		}
+
+		.header {
+			display: flex;
+		}
+
+		#searchhead {
+			background-color: transparent;
+			border: none;
+			outline: none;
+			width: 80%;
+		}
+
+		.searchbox {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 12px 0;
+		}
+
+		.sb-search {
+			display: flex;
+		}
+
+		.sb-search a {
+			font-weight: bold;
+		}
+
+		#shopcar {
+			position: absolute;
+			right: 0;
+			background: #E1F3FF !important;
+			border-radius: 50%;
+		}
+
+		.icon {
+			display: inline-block;
+		}
+
+		.icon img {
+			margin: 10px;
+			width: 25px;
+			height: 25px;
+		}
+
+		.icon:hover {
+			border-radius: 100%;
+			background-color: rgba(254, 254, 254, 0.3);
+		}
+
+		.swiper {
+			--swiper-theme-color: #fff !important;
+		}
+
+		.swiper .swiper-pagination-bullet {
+			border-radius: 0%;
+			height: .2rem !important;
+		}
+
+		.swiper-pagination-bullet-active {
+			width: 1rem !important;
+		}
+
+		@media (max-width: 480px) {
+			.sb-search {
+				top: 1rem;
+			}
+
+			.icon img {
+				width: 15px;
+				height: 15px;
+			}
+
+			.searchbox #cha {
+				width: 12.5px;
+			}
+
+			.searchbox #sicon {
+				width: 12.5px;
+			}
+		}
+	</style>
+	<!--navigation end here-->
+	</div>
+	<div class="banner swiper">
+		<!--navigation start here-->
+		<div class="swiper-wrapper" id="swiper">
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+	<link rel="stylesheet" href="./public/css/swiper-bundle.min.css" type="text/css" media="screen" />
+	<script defer src="./public/js/swiper-bundle.min.js"></script>
+	<script type="text/javascript">
+		$.get(baseUrl + "/api/slide", {}, function (data) {
+			let h5 = ''
+			if (data.code == 200) {
+				console.log(data);
+				for (let index = 0; index < data.data.length; index++) {
+					h5 += `<div class="banner-main swiper-slide" style="display: flex;flex-direction: column;background: url(${data.data[index].imagepath});background-size: 100% 100%;">`
+					h5 += `<a href="${data.data[index].line_url}">`
+					if (data.data[index].form_type == 2) {
+						h5 += `<div class="banner-btn"><button class="main-btn"></button></div>`
+					}
+					h5 += `</a></div>`
+				}
+			}
+			$('#swiper').html(h5)
+		})
+	</script>
+	<script>
+		$(window).load(function () {
+			var mySwiper = new Swiper('.swiper', {
+				speed: 1000,
+				autoplay: {
+					delay: 3000
+				},
+				loop: true,
+				disableOnInteraction: false, // 用户操作swiper之后，是否禁止autoplay]。默认为true：停止。
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true
+				}
+			})
+		})</script>
+	<style type="text/css">
+		body {
+			background-color: #f6f6f6;
+		}
+
+		#fh5co-slider {
+			background: #2A528A;
+		}
+
+		h3 {
+			color: #000000;
+		}
+
+		.shosetalk {
+			text-align: center;
+		}
+
+		.main-btn {
+			margin-top: 50%;
+			margin-right: 20%;
+			margin-bottom: 5%;
+			background: url(./public/img/button_normal.png) no-repeat;
+			background-size: 100% 100%;
+			padding: 40px 124px;
+			border: none;
+		}
+
+		.title {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.show-main {
+			color: #1D1D1F;
+			font-size: 2.3em;
+		}
+
+		.sb-search a {
+			color: #fff !important;
+		}
+
+		.before {
+			display: inline-block;
+			width: 180px;
+			height: 1px;
+			background: linear-gradient(89.95deg, rgba(82, 82, 82, 0.03) 20.01%, #000000 77.77%);
+			margin-right: 5px;
+		}
+
+		.after {
+			width: 180px;
+			display: inline-block;
+			height: 1px;
+			background: linear-gradient(89.95deg, rgba(82, 82, 82, 0.03) 20.01%, #000000 77.77%);
+			margin-left: 5px;
+			transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			/* IE 9 */
+			-webkit-transform: rotate(180deg);
+			/* Safari and Chrome */
+		}
+
+		#fh5co-slider .container div {
+			margin-top: 2em;
+			margin-bottom: 2em;
+			/*margin-right: 2em;*/
+		}
+
+		.flex-control-nav {
+			position: relative;
+		}
+
+		.first-header {
+			width: 100%;
+			position: absolute;
+			z-index: 999;
+		}
+
+		.swiper {
+			height: 700px;
+		}
+
+		@media (min-width: 1200px) {
+			.swiper {
+				height: 800px;
+			}
+		}
+
+		@media (min-width: 1400px) {
+			.main-btn {
+				margin-top: 50%;
+			}
+
+			.swiper {
+				height: 1000px;
+			}
+		}
+
+		@media (min-width: 1600px) {
+			.swiper {
+				height: 1100px;
+			}
+		}
+
+		@media (min-width: 1800px) {
+			.swiper {
+				height: 1200px;
+			}
+		}
+
+		@media (min-width: 2000px) {
+			.swiper {
+				height: 1300px;
+			}
+		}
+
+		@media (max-width: 900px) {
+			.swiper {
+				height: 550px;
+			}
+
+			.main-btn {
+				padding: 20px 62px;
+				margin-top: 40%;
+				margin-right: 10%;
+			}
+		}
+
+		@media (max-width: 800px) {
+			.swiper {
+				height: 500px;
+			}
+
+			.main-btn {
+				padding: 20px 62px;
+				margin-top: 50%;
+				margin-right: 10%;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.after {
+				width: 100px;
+			}
+
+			.before {
+				width: 100px;
+			}
+
+			.swiper {
+				height: 360px;
+			}
+
+			.main-btn {
+				padding: 20px 62px;
+				margin-top: 60%;
+				margin-right: 10%;
+			}
+		}
+
+		.banner-main img {
+			margin-top: 10%;
+		}
+
+		.banner-btn {
+			display: flex;
+			justify-content: flex-end
+		}
+
+		.main-btn:hover {
+			background: url(./public/img/button_hover.png);
+			background-size: 100% 100%;
+			border: none;
+		}
+
+		.recom {
+			position: relative;
+		}
+
+		.recom a {
+			padding: 0 1rem;
+			background: linear-gradient(180deg, #FAFAFA 0%, #FBFBFB 100%);
+		}
+
+		.recom div {
+			margin: 1em 0;
+		}
+
+		.good {
+			font-weight: bold;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.number {
+			left: 40px;
+			top: 20px;
+			position: absolute;
+			width: 20px
+		}
+
+		.events {
+			background: linear-gradient(90deg, #F8F9FF 1.21%, #EBF1F4 100%);
+		}
+
+		.talklist {
+			text-align: left;
+			font-size: 1.5em;
+			padding: 0.5em 0;
+			padding-left: 30%;
+			display: flex;
+			align-items: center;
+		}
+
+		.talk {
+			padding-left: 0.5em;
+		}
+
+		.talkbtn button {
+			background: url(./public/img/talkbtn_normal.png) no-repeat;
+			background-size: 100% 100%;
+			padding: 30px 90px;
+			border: none;
+			margin-top: 2em;
+		}
+
+		.talkbtn button:hover {
+			background: url(./public/img/talkbtn_hover.png);
+			background-size: 100% 100%;
+		}
+
+		.sanji {
+			width: 0;
+			height: 0;
+			border-left: 10px solid rgba(2, 2, 2, 1);
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+		}
+
+		@media (max-width: 900px) {
+			.talklist {
+				padding-left: 15%;
+			}
+		}
+
+		@media (max-width: 700px) {
+			.talklist {
+				padding-left: 0;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.show-main {
+				font-size: 12px;
+				font-weight: bold;
+			}
+
+			.talklist {
+				padding-left: 15%;
+			}
+		}
+	</style>
+	<div class="row wow fadeInUp animated animated title" data-wow-duration="1200ms" data-wow-delay="500ms"
+		style="text-align: center;padding-top: 5em;">
+		<span class="before"></span><span class="show-main">強化買取</span><span class="after"></span>
+	</div>
+	<!--admission-->
+	<div class="admission w3ls">
+		<div class="container">
+			<div class="faculty_top" id="recommen">
+			</div>
+		</div>
+	</div>
+	<script>
+		$.ajax({
+			type: 'get',
+			url: baseUrl + '/api/product?recommand_status=1',
+			success(data) {
+				console.log(data);
+				let str = ''
+				let recom = data.data.data
+				for (let index = 0; index < recom.length; index++) {
+					str +=
+						`<div class="col-md-3 faculty_grid wow animated recom" data-wow-delay=".5s">
+					<a href="../cms/detail.html?id=${recom[index].id}" class="mask">
+					<img src="${recom[index].pic}" class="img-responsive zoom-img">
+					<img src="" class="number">
+					<div class="good">${recom[index].name}</div>
+					<div class="name">品番：${recom[index].product_sn}</div>
+					<div class="price">買取金額：￥${recom[index].price}
+					</div>
+				</a>
+			</div>`
+				}
+				$('#recommen').html(str)
+				$('.recom .number:first').attr("src", " ./public/img/first.png");
+				$('.recom .number:eq(1)').attr("src", " ./public/img/second.png");
+				$('.recom .number:eq(2)').attr("src", " ./public/img/third.png");
+				$('.recom').click(function () {
+					$(this).css({ boxShadow: '8px 10px 10px 1px rgba(0,0,0,0.5)' })
+				})
+			}
+		})
+	</script>
+	<div class="row wow fadeInUp animated animated title" data-wow-duration="1200ms" data-wow-delay="500ms"
+		style="text-align: center;padding: 5em 0;">
+		<span class="before"></span><span class="show-main">サービス</span><span class="after"></span>
+	</div>
+	<div class="events agile">
+		<div class="container">
+			<div class="events-grids">
+				<div class="col-md-6 bnr-galry-right wow fadeInLeft animated" data-wow-delay=".5s">
+					<a href="javascript:void(0);" class="mask">
+						<img src=" ./public/img/shose.png" class="img-responsive zoom-img" alt="">
+					</a>
+				</div>
+				<div class="bnr-galry">
+					<div class="col-md-6 bnr-galry-left wow fadeInRight animated shosetalk" data-wow-delay=".5s">
+						<h3>無料査定</h3>
+						<div class="talklist"><span class="sanji"></span><span class="talk">24時間以内の査定</span></div>
+						<div class="talklist"><span class="sanji"></span><span class="talk">業界No.1の査定金額</span></div>
+						<div class="talklist"><span class="sanji"></span><span class="talk">リピーター率95％</span></div>
+						<div class="talkbtn"><button onclick='javascript:location.href="../cms/enquiry.html"'></button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+
+	<!--events-->
+	<div class="row wow fadeInUp animated animated title" data-wow-duration="1200ms" data-wow-delay="500ms"
+		style="text-align: center;padding-top: 5em;margin-bottom: 5em;">
+		<span class="before"></span><span class="show-main">ブランド</span><span class="after"></span>
+	</div>
+	<div class="container">
+		<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+			<ul class="layui-tab-title">
+				<li class="layui-this">フランド</li>
+				<li>ジャンル</li>
+				<li>スニーカー</li>
+				<li>アパレル</li>
+				<li>フィギュア</li>
+			</ul>
+		</div>
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show">
+				<div class="brandgroup">
+					<div class="brand">
+						<a href="market/40"><img src=" ./public/img/brand/b1.png"></a>
+					</div>
+					<div class="brand">
+						<a href="market/34"><img src=" ./public/img/brand/b2.jpg"></a>
+					</div>
+					<div class="brand">
+						<a href="market/23"><img src=" ./public/img/brand/b3.jpg"></a>
+					</div>
+					<div class="brand">
+						<a href="market/40"><img src=" ./public/img/brand/b4.png"></a>
+					</div>
+					<div class="brand">
+						<a href="market/20"><img src=" ./public/img/brand/b5.png"></a>
+					</div>
+				</div>
+			</div>
+			<div class="gopro"><a href="./market.html">詳しくはこちら></a></div>
+		</div>
+	</div>
+	<style>
+		.gopro {
+			text-align: center;
+			margin-bottom: 5em;
+		}
+
+		.gopro a {
+			color: #1890FF;
+		}
+
+		.brandgroup {
+			margin: 20px 0;
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.brand {
+			padding: 10px 0;
+			margin: 10px 0;
+			text-align: center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #fff;
+		}
+
+		.brand img {
+			width: 50%;
+		}
+
+		.layui-tab-title {
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.layui-tab-brief>.layui-tab-title .layui-this {
+			color: #333333;
+		}
+
+		.layui-tab-brief>.layui-tab-more li.layui-this:after,
+		.layui-tab-brief>.layui-tab-title .layui-this:after {
+			border-bottom: 2px solid #333;
+		}
+
+		@media (max-width: 480px) {
+			.brandgroup {
+				flex-direction: column
+			}
+		}
+	</style>
+	<script>
+		layui.use('element', function () {
+			var $ = layui.jquery
+				, element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+			//触发事件
+			var active = {
+				tabChange: function () {
+					//切换到指定Tab项
+					element.tabChange('demo', '22'); //切换到：用户管理
+				}
+			};
+
+			$('.site-demo-active').on('click', function () {
+				var othis = $(this), type = othis.data('type');
+				active[type] ? active[type].call(this, othis) : '';
+			});
+
+			//Hash地址的定位
+			var layid = location.hash.replace(/^#test=/, '');
+			element.tabChange('test', layid);
+			element.on('tab(test)', function (elem) {
+				location.hash = 'test=' + $(this).attr('lay-id');
+			});
+		});
+	</script>
+	<div class="footer">
+		<div class="container">
+			<div class="footer-grids">
+				<div class="col-md-2 footer-grid wow fadeInLeft animated" data-wow-delay=".5s">
+					<ul>
+						<li><a href="../cms/single.html?catid=1&index=0">利用規約</a></li>
+						<li><a href="../cms/single.html?catid=1&index=1">プライバシーポリシー</a></li>
+						<li><a href="../cms/single.html?catid=1&index=2">個人情報保護法</a></li>
+						<li><a href="../cms/single.html?catid=1&index=3">ソーシャルメディアポリシー</a></li>
+						<li><a href="../cms/single.html?catid=1&index=4">特定商取引法に基づく表記</a></li>
+					</ul>
+				</div>
+				<div class="col-md-2 footer-grid animated wow fadeInUp animated animated" data-wow-duration="1200ms"
+					data-wow-delay="500ms">
+					<ul>
+						<li>
+							<a href="../cms/market.html">商品価格</span></a>
+						</li>
+						<li>
+							<a href="../cms/enquiry.html">無料査定</span></a>
+						</li>
+						<li>
+							<a href="../cms/step.html">利用ガイド</span></a>
+						</li>
+						<!-- <li>
+							<a href="../cms/appraisal.html">無料鑑定</span></a>
+						</li> -->
+						<li>
+							<a href="../cms/problem.html">よくある質問</span></a>
+						</li>
+					</ul>
+				</div>
+				<div id="shop">
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="foot-info">
+				<div class="info">
+					<ul>
+						<li><a href="/"><img src="./public/img/footlogo.png" alt=""></a></li>
+						<li><a href="/singlepage2/128">会社紹介</a></li>
+						<li><a href="/singlepage2/129">お問い合わせ</a></li>
+						<li><a href="/singlepage2/130">採用情報</a></li>
+						<li><a href="/singlepage2/42">利用規約</a></li>
+					</ul>
+				</div>
+				<div class="col-md-2 footer-grid animated wow fadeInUp animated animated" data-wow-duration="1200ms"
+					data-wow-delay="500ms">
+					<ul class="social-icons1">
+						<li><a href="https://twitter.com/the1sneaker"><img src="./public/img/twitter.png"
+									style="height:30px ;width:30px;"></img></a></li>
+						<li><a href="https://twitter.com/the1sneaker"><img src="./public/img/ins.png"
+									style="height:30px ;width:30px;"></img></a></li>
+						<li><a href="https://twitter.com/the1sneaker"><img src="./public/img/line.png"
+									style="height:30px ;width:30px;"></img></a></li>
+						<li><a href="https://twitter.com/the1sneaker"><img src="./public/img/mail.png"
+									style="height:30px ;width:30px;"></img></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="copy-right wow fadeInUp animated animated" data-wow-duration="1200ms" data-wow-delay="500ms">
+				<div class="earth">
+					<img src="./public/img/earth.png"><span>日本/日本語</span>
+				</div>
+				<p>東京都公安委員会 第305502007435号</p>
+				<p>FIT株式会社 <a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备19030271号-1</a> <a href="/"
+						target="_blank" title="the1sneaker">the1sneaker</a></p>
+			</div>
+		</div>
+	</div>
+	<style>
+		.footer {
+			background: #333;
+			margin-top: 40px;
+			color: #9FA3A6;
+		}
+
+		.footer a {
+			color: #9FA3A6;
+		}
+
+		.footer a:hover {
+			color: #fff;
+		}
+
+		.footer a span {
+			color: #9FA3A6;
+		}
+
+		.footer a span:hover {
+			color: #fff;
+		}
+
+		.footer .footer-grid h3 {
+			color: #fff;
+		}
+
+		.footer-grids {
+			margin-bottom: 5em;
+		}
+
+		.email-link {
+			word-wrap: break-word;
+		}
+
+		.foot-info {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding-bottom: 5px;
+			border-bottom: 1px solid #fff;
+		}
+
+		.info ul {
+			display: flex;
+		}
+
+		.info ul li {
+			padding: 0 20px;
+		}
+
+		.earth {
+			float: right;
+		}
+
+		@media (max-width: 480px) {
+			.info ul {
+				flex-direction: column;
+			}
+
+			.copy-right p {
+				font-size: 14px;
+			}
+		}
+	</style>
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?9fd62443f08c83cfd1fb5c01f92a3448";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+
+		//刷新底部栏
+		$(function () {
+			layui.use(['layer'], function () {
+				$.get(baseUrl + "/api/shop", {}, function (data) {
+					if (data.code == 200) {
+						var h5 = ''
+						$.each(data.data, function (index, item) {
+							if (index >= 2) {
+								return false;
+							} else {
+								h5 += '<div class="col-md-2 footer-grid wow fadeInRight animated" data-wow-delay=".5s">'
+								h5 += '<p>' + item.shop_address + '</p>'
+								h5 += '<div class="footer-grid-address">'
+								h5 += '<p>Tel: ' + item.shop_phone + '</p>'
+								h5 += `<p>Email: <a class="email-link" href="mailto:${item.shop_email}">${item.shop_email}</a></p>`
+								h5 += '</div>'
+								h5 += '</div>'
+							}
+						});
+						$('#shop').html(h5)
+					} else {
+						layer.alert(data.msg, {
+							icon: 5,
+							title: "信息"
+						});
+					}
+				}, "json");
+			})
+		})
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>the1sneaker</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="the1sneaker">
+    <meta name="keywords" content="the1sneaker">
+    <link href="./public/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="./public/css/layui.css">
+    <script src="./public/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="./public/js/bootstrap.min.js"></script>
+    <script src="./public/js/layui/layui.js"></script>
+    <link href="./public/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+</script>
+    <link href="./public/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="./public/css/animate.css" rel="stylesheet" type="text/css" media="all">
+    <script src="./public/js/wow.min.js"></script>
+    <script src="./public/js/base.js"></script>
+    <script src=" ./public/js/classie.js"></script>
+    <script src=" ./public/js/uisearch.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+</head>
+
+<body>
+    <div class="banner-1">
+        <div class="searchmain">
+            <div class="container">
+                <div class="searchbox">
+                    <div class="logo">
+                        <h1><a href="/"><img src=" ./public/img/LOGO.png" alt="logo"></a></h1>
+                    </div>
+                    <div class="seachdiv">
+                        <img id="sicon" src=" ./public/img/searchblack.png">
+                        <input type="search" name="" id="searchhead" placeholder="何をお探しですが？">
+                    </div>
+                    <div>
+                        <img src=" ./public/img/cha.png" id="cha">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <div class="logo wow fadeInLeft animated" data-wow-delay=".5s">
+                    <h1><a href="./index.html"><img src=" ./public/img/LOGO.png" alt="logo"></a></h1>
+                </div>
+                <nav class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <!--/.navbar-header-->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav animated wow fadeInUp animated animated" data-wow-duration="1200ms"
+                            data-wow-delay="500ms">
+                            <li class="active"><a href="./index.html" title="ホームページ">ホームページ</a></li>
+                            <li><a href="./market.html" title="商品価格">商品価格</a></li>
+                            <li><a href="./enquiry.html" title="無料査定">無料査定</a></li>
+                            <li><a href="./step.html" title="利用ガイド">利用ガイド</a></li>
+                            <!-- <li><a href="./appraisal.html" title="無料鑑定">無料鑑定</a></li> -->
+                            <li><a href="./problem.html" title="よくある質問">よくある質問</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <div id="sb-search" class="sb-search wow fadeInRight animated" data-wow-delay=".5s"
+                    style="line-height: 3;font-size: 14px;">
+                    <div class="token"> <a href="../memeber/login.html">ログイン </a>
+                        <a href="../memeber/register.html"> 新規登録</a>
+                    </div>
+                    <div class="tokenin">
+                        <span class="icon"><img src=" ./public/img/blacksearch.png" id="searchicon"></span>
+                        <span class="icon"><img src=" ./public/img/blackuser.png" title="マイページ"></span>
+                        <span class="icon"><img src=" ./public/img/blackcar.png" style="position: relative;"
+                                id="caricon">
+                            <span id="shopcar" class="layui-badge">9</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+
+    <style type="text/css">
+        .layui-form-select dl dd.layui-this {
+            background-color: #C5D0E1;
+        }
+
+        @media (min-width: 640px) {
+			.logo img {
+				width: 60%;
+				position: relative;
+			}
+        }
+
+        .navbar-default .navbar-nav>li>a {
+            color: #000;
+            font-size: 1.1em;
+            font-weight: 400;
+        }
+
+        .navbar-default .navbar-nav>li>a:hover,
+        .navbar-default .navbar-nav>li>a:focus {
+            color: #000;
+            background-color: rgba(0, 0, 0, 0);
+            border-bottom: 2px solid #000;
+        }
+
+        .navbar-default .navbar-nav>.active>a,
+        .navbar-default .navbar-nav>.active>a:hover,
+        .navbar-default .navbar-nav>.active>a:focus {
+            color: #000;
+            background-color: rgba(0, 0, 0, 0);
+            border-bottom: 2px solid #000;
+        }
+
+        .searchmain {
+            width: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 99;
+            background-color: #fff;
+            display: none;
+        }
+
+        .seachdiv {
+            width: 70%;
+        }
+
+        .header {
+            display: flex;
+        }
+
+        #searchhead {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            width: 80%;
+        }
+
+        .searchbox {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+        }
+
+        .sb-search {
+            display: flex;
+        }
+
+        .sb-search a {
+            font-weight: bold;
+        }
+
+        #shopcar {
+            position: absolute;
+            right: 0;
+            background: rgba(197, 208, 225, 1) !important;
+            border-radius: 50%;
+            color: #000;
+        }
+
+        .icon {
+            display: inline-block;
+        }
+
+        .icon img {
+            margin: 10px;
+            width: 25px;
+            height: 25px;
+        }
+
+        .icon:hover {
+            border-radius: 100%;
+            background-color: rgba(254, 254, 254, 0.3);
+        }
+
+        .swiper {
+            --swiper-theme-color: #fff !important;
+        }
+
+        .swiper .swiper-pagination-bullet {
+            border-radius: 0%;
+            height: .2rem !important;
+        }
+
+        .swiper-pagination-bullet-active {
+            width: 1rem !important;
+        }
+
+        @media (max-width: 480px) {
+            .sb-search {
+                top: 1rem;
+            }
+
+            .icon img {
+                width: 15px;
+                height: 15px;
+            }
+
+            .searchbox #cha {
+                width: 12.5px;
+            }
+
+            .searchbox #sicon {
+                width: 12.5px;
+            }
+        }
+    </style>
+    </div>
+    <div class="contact w3l-3" id="problem">
+        <div class="container">
+            <h2 style="color: #C5D0E1;">よくある質問</h2>
+
+            <div class="grid_3 grid_5">
+                <div class="layui-tab" lay-filter="maintenanceOrder">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">よくある質問</li>
+                        <li>買取について</li>
+                        <li>鑑定について</li>
+                        <li>査定について</li>
+                        <li>アカウントについて</li>
+                    </ul>
+                    <div class="layui-tab-content about">
+                        <div class="layui-tab-item layui-show" id="contect">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let token = sessionStorage.getItem('token')
+        if (token) {
+            $('.token').css('display', 'none')
+            $.ajax({
+                type: 'get',
+                url: baseUrl + "/api/shopping",
+                headers: {
+                    'Authorization': sessionStorage.getItem('token'),
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                success(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        if (data.data == 0) {
+                            $('#shopcar').css('display', 'none')
+                        } else {
+                            $('#shopcar').html(data.data.total)
+                        }
+                    } else {
+                        layui.msg(data.msg)
+                    }
+                }
+            })
+        } else {
+            $('.tokenin').css('display', 'none')
+        }
+        $("#searchicon").click(function () {
+            $(".searchmain").slideDown();
+        });
+        $("#cha").click(function () {
+            $(".searchmain").slideUp();
+        });
+        $('#caricon').click(function () {
+            $.post("member/content/cartsList", function (data) {
+                if (data.code == 0) {
+                    console.log(data.data);
+                } else {
+                    layer.msg('网络错误!');
+                }
+            })
+        })
+        $(function () {
+			var _nava = $('.navbar-nav a');
+			var _url = window.location.href;
+			var _host = window.location.host;
+			for (var i = 0; i < _nava.length; i++) {
+				var _astr = _nava.eq(i).attr('href');
+				_astr = _astr.split('./')[1]
+				if (_url.indexOf(_astr) != -1) {
+					_nava.eq(i).parent().addClass('active').siblings().removeClass('active');
+				} else if (_url == ('http://' + _host + '/')) {
+					_nava.eq(0).addClass('active').siblings().removeClass('active');
+				}
+			}
+		})
+        $('#searchhead').keydown(function (e) {
+				var good_name = $("#searchhead").val()
+				if (good_name == null || good_name == '') {
+					return
+				}
+				if (e.keyCode == 13) {
+					let parse = {
+						good_name: null,
+						productsn: null,
+						page: null,
+						limit: null
+					}
+					parse.good_name = good_name
+					window.location.href = '/market?good_name=' + parse.good_name + '&productsn=' + parse.good_name
+				}
+			})
+    </script>
+    <script>
+        let arr = []
+        var element = layui.element
+        var index = 0
+        $.ajax({
+            type: 'get',
+            url: baseUrl + '/api/article?catid=6&ascription=' + index,
+            success(data) {
+                arr = data.data
+                let str = '<ul>'
+                $.each(data.data, function (index, item) {
+                    str += `<li>
+                        <div onclick="problem(${index})">${item.title}</div>
+                        </li>`
+                })
+                str += '</ul>'
+                $('#contect').html(str)
+            }
+        })
+        element.on('tab(maintenanceOrder)', function (data) {
+            $.ajax({
+                type: 'get',
+                url: baseUrl + '/api/article?catid=6&ascription=' + data.index,
+                success(data) {
+                    arr = data.data
+                    let str = '<ul>'
+                    $.each(data.data, function (index, item) {
+                        str += `<li>
+                            <div onclick='problem(${index})'>${item.title}</div>
+                        </li>`
+                    })
+                    str += '</ul>'
+                    $('#contect').html(str)
+                }
+            })
+        });
+        function msToDate(msec) {
+            let datetime = new Date(msec);
+            let year = datetime.getFullYear();
+            let month = datetime.getMonth();
+            let date = datetime.getDate();
+            let hour = datetime.getHours();
+            let minute = datetime.getMinutes();
+            let second = datetime.getSeconds();
+
+            let result1 = year +
+                '-' +
+                ((month + 1) >= 10 ? (month + 1) : '0' + (month + 1)) +
+                '-' +
+                ((date + 1) < 10 ? '0' + date : date) +
+                ' ' +
+                ((hour + 1) < 10 ? '0' + hour : hour) +
+                ':' +
+                ((minute + 1) < 10 ? '0' + minute : minute) +
+                ':' +
+                ((second + 1) < 10 ? '0' + second : second);
+
+            let result2 = year +
+                '-' +
+                ((month + 1) >= 10 ? (month + 1) : '0' + (month + 1)) +
+                '-' +
+                ((date + 1) < 10 ? '0' + date : date);
+
+            let result = {
+                hasTime: result1,
+                withoutTime: result2
+            };
+
+            return result;
+        }
+        function problem(index) {
+            let problem = arr[index]
+            let shijian = msToDate(problem.createtime)
+            problem.content = problem.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+            let str =
+                `<div class="single w3l-5">
+                <div class="container">
+                    <div class="single-left1 w3ls-5">
+                        <h2 style='text-align:left'>${problem.title}</h2>
+                        <ul>
+                            <li><span style="color: #C5D0E1;" class="glyphicon glyphicon-calendar" aria-hidden="true"></span>${shijian.hasTime}</li>
+                        </ul>
+                        ${problem.content}
+                    </div>
+                </div>
+            </div>`
+            $('#problem').html(str)
+        }
+
+    </script>
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-grids">
+                <div class="col-md-2 footer-grid wow fadeInLeft animated" data-wow-delay=".5s">
+                    <ul>
+                        <li><a href="../cms/single.html?catid=1&index=0">利用規約</a></li>
+                        <li><a href="../cms/single.html?catid=1&index=1">プライバシーポリシー</a></li>
+                        <li><a href="../cms/single.html?catid=1&index=2">個人情報保護法</a></li>
+                        <li><a href="../cms/single.html?catid=1&index=3">ソーシャルメディアポリシー</a></li>
+                        <li><a href="../cms/single.html?catid=1&index=4">特定商取引法に基づく表記</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 footer-grid animated wow fadeInUp animated animated" data-wow-duration="1200ms"
+                    data-wow-delay="500ms">
+                    <ul>
+						<li>
+							<a href="../cms/market.html">商品価格</span></a>
+						</li>
+						<li>
+							<a href="../cms/enquiry.html">無料査定</span></a>
+						</li>
+						<li>
+							<a href="../cms/step.html">利用ガイド</span></a>
+						</li>
+						<!-- <li>
+							<a href="../cms/appraisal.html">無料鑑定</span></a>
+						</li> -->
+						<li>
+							<a href="../cms/problem.html">よくある質問</span></a>
+						</li>
+                    </ul>
+                </div>
+                <div id="shop">
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="foot-info">
+                <div class="info">
+                    <ul>
+                        <li><a href="/"><img src="./public/img/footlogo.png" alt=""></a></li>
+                        <li><a href="/singlepage2/128">会社紹介</a></li>
+                        <li><a href="/singlepage2/129">お問い合わせ</a></li>
+                        <li><a href="/singlepage2/130">採用情報</a></li>
+                        <li><a href="/singlepage2/42">利用規約</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 footer-grid animated wow fadeInUp animated animated" data-wow-duration="1200ms"
+                    data-wow-delay="500ms">
+                    <ul class="social-icons1">
+                        <li><a href="https://twitter.com/the1sneaker"><img src="./public/img/twitter.png"
+                                    style="height:30px ;width:30px;"></img></a></li>
+                        <li><a href="https://twitter.com/the1sneaker"><img src="./public/img/ins.png"
+                                    style="height:30px ;width:30px;"></img></a></li>
+                        <li><a href="https://twitter.com/the1sneaker"><img src="./public/img/line.png"
+                                    style="height:30px ;width:30px;"></img></a></li>
+                        <li><a href="https://twitter.com/the1sneaker"><img src="./public/img/mail.png"
+                                    style="height:30px ;width:30px;"></img></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copy-right wow fadeInUp animated animated" data-wow-duration="1200ms" data-wow-delay="500ms">
+                <div class="earth">
+                    <img src="./public/img/earth.png"><span>日本/日本語</span>
+                </div>
+                <p>東京都公安委員会 第305502007435号</p>
+                <p>FIT株式会社 <a href="http://www.beian.miit.gov.cn/" target="_blank">豫ICP备19030271号-1</a> <a href="/"
+                        target="_blank" title="the1sneaker">the1sneaker</a></p>
+            </div>
+        </div>
+    </div>
+    <style>
+        .footer {
+            background: #333;
+            margin-top: 40px;
+            color: #9FA3A6;
+        }
+
+        .footer a {
+            color: #9FA3A6;
+        }
+
+        .footer a:hover {
+            color: #fff;
+        }
+
+        .footer a span {
+            color: #9FA3A6;
+        }
+
+        .footer a span:hover {
+            color: #fff;
+        }
+
+        .footer .footer-grid h3 {
+            color: #fff;
+        }
+
+        .footer-grids {
+            margin-bottom: 5em;
+        }
+
+        .email-link {
+            word-wrap: break-word;
+        }
+
+        .foot-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #fff;
+        }
+
+        .info ul {
+            display: flex;
+        }
+
+        .info ul li {
+            padding: 0 20px;
+        }
+
+        .earth {
+            float: right;
+        }
+
+        @media (max-width: 480px) {
+            .info ul {
+                flex-direction: column;
+            }
+
+            .copy-right p {
+                font-size: 14px;
+            }
+        }
+    </style>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9fd62443f08c83cfd1fb5c01f92a3448";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+
+        //刷新底部栏
+        $(function () {
+            layui.use(['layer'], function () {
+                $.get(baseUrl + "/api/shop", {}, function (data) {
+                    if (data.code == 200) {
+                        var h5 = ''
+                        $.each(data.data, function (index, item) {
+                            if (index >= 2) {
+                                return false;
+                            } else {
+                                h5 += '<div class="col-md-2 footer-grid wow fadeInRight animated" data-wow-delay=".5s">'
+                                h5 += '<p>' + item.shop_address + '</p>'
+                                h5 += '<div class="footer-grid-address">'
+                                h5 += '<p>Tel: ' + item.shop_phone + '</p>'
+                                h5 += `<p>Email: <a class="email-link" href="mailto:${item.shop_email}">${item.shop_email}</a></p>`
+                                h5 += '</div>'
+                                h5 += '</div>'
+                            }
+                        });
+                        $('#shop').html(h5)
+                    } else {
+                        layer.alert(data.msg, {
+                            icon: 5,
+                            title: "信息"
+                        });
+                    }
+                }, "json");
+            })
+        })
+    </script>
+</body>
+
+</html>
